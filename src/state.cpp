@@ -46,3 +46,7 @@ vector<pair<int,int>> State::getAdjacent(pair<int, int> empty) {
 
     return pieces;
 }
+
+int State::getElement(int x, int y) {
+    return this->board[x][y];
+}

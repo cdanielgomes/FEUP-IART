@@ -21,6 +21,7 @@ private:
 public:
     Node(State state, Node * parentNode, int depth, int pathCost);
     void printState();
+    State getState();
     
 };
 

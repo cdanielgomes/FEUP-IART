@@ -1,17 +1,15 @@
-#include <iostream>
-#include <utility>
-#include "node.h"
+#include "search.h"
 
 using namespace std;
 
 int main() {
-    /*
-    0 - empty square (1x1)
+
+    
+ /* 0 - empty square (1x1)
     -1 - 2x2 block
     1 - 1x1 block
     2 - 1x2 block
-    3 - 2x1 block
-    */
+    3 - 2x1 block */
     vector<vector<int>> initialBoard = {
         {1, -1, -1, 1},
         {1, -1, -1, 1},
@@ -25,7 +23,10 @@ int main() {
 
     State initialState(initialBoard, empty1, empty2);
     Node root(initialState, nullptr, 0, 0);
+    Search search = Search();
 
-    root.printState();
+    search.addToQueue(root);
+    //search.search();    
 
 }
+

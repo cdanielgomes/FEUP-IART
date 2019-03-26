@@ -7,3 +7,7 @@ Node::Node(State state, Node * parentNode, int depth, int pathCost) : parentNode
 void Node::printState() {
     this->state.printState();
 }
+
+State Node::getState() {
+    return this->state;
+}
