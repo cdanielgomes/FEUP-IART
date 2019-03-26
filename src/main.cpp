@@ -26,6 +26,13 @@ vector<pair<int,int>> getAdjacent(vector<vector<int>> state, pair<int,int> empty
     return pieces;
 }
 
+
+
+vector<vector<vector<int>>> piecesToMove(vector<vector<int>> state, pair<int,int> empty1, pair<int,int> empty2){
+
+vector<pair<int,int>> adjacentPieces = getAdjacent(state, empty1, empty2);
+}
+
 int main() {
     vector<vector<int>> initialState = {
         {1, -1, -1, 2},
