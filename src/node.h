@@ -1,10 +1,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-#include <vector>
-#include <iostream>
-#include <iomanip>
-#include <utility>
+#include "state.h"
 
 /* 
     A seguir a estrutura dos slides de solving search 
@@ -14,20 +11,16 @@
 class Node {
 
 private:
-    std::vector<std::vector<int>> state;
+    State state;
     Node * parentNode;
     // operator
     int depth;
     int pathCost;
 
-    std::pair<int, int> empty1;
-    std::pair<int, int> empty2;
 
 public:
-    Node(std::vector<std::vector<int>> state, Node * parentNode, int depth, int pathCost);
-
+    Node(State state, Node * parentNode, int depth, int pathCost);
     void printState();
-    void setEmpties(std::pair<int, int> empty1, std::pair<int, int> empty2);
     
 };
 
