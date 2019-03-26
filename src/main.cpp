@@ -27,12 +27,19 @@ vector<pair<int,int>> getAdjacent(vector<vector<int>> state, pair<int,int> empty
 }
 
 int main() {
+    /*
+    0 - empty square (1x1)
+    -1 - 2x2 block
+    1 - 1x1 block
+    2 - 1x2 block
+    3 - 2x1 block
+    */
     vector<vector<int>> initialState = {
-        {1, -1, -1, 2},
-        {3, -1, -1, 4},
-        {5, 6, 7, 8},
-        {5, 9, 10, 8},
-        {11, 0, 0, 12}
+        {1, -1, -1, 1},
+        {1, -1, -1, 1},
+        {2, 1, 1, 2},
+        {2, 1, 1, 2},
+        {1, 0, 0, 1}
     };
 
     pair<int,int> empty1(4, 1); // coordinates of initial empty space

@@ -8,7 +8,17 @@ void Node::printState() {
 
     for(auto line=this->state.begin(); line!=this->state.end(); line++) {
         for(auto column=(*line).begin(); column!=(*line).end(); column++) {
-            cout << setw(5) << *column << "|";
+            switch(*column) {
+                case -1: 
+                cout << setw(5) << "x" << "|";
+                break;
+                case 0:
+                cout << setw(5) << " " << "|";
+                break;
+                default:
+                cout << setw(5) << *column << "|";
+            }
+            
         }
         cout << endl;
     }
