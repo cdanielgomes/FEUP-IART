@@ -6,6 +6,30 @@ using namespace std;
     : board(board), empty1(empty1), empty2(empty2) {}
 */
 
+State::State(std::vector<std::vector<int>> board) {
+    int x = 0;
+    int y = 0;
+
+    for (auto &i : board) {
+        for (auto &j: i) {
+
+                try {
+                    Block &block = this->blocks.at(j);
+                    block.addPos(x, y);
+                } catch (const std::out_of_range &oor) {
+                    Block block(j);
+                    block.addPos(x, y);
+                    this->blocks.insert(std::pair<int, Block>(j, block));
+                }
+
+            x++;
+        }
+        x = 0;
+        y++;
+    }
+
+}
+
 State::State(std::vector<std::vector<int>> board, std::pair<int, int> empty1, std::pair<int, int> empty2) {
 
     int x = 0;
@@ -35,7 +59,7 @@ State::State(std::vector<std::vector<int>> board, std::pair<int, int> empty1, st
 
 void State::printState() {
 
-/*    for (auto line = this->board.begin(); line != this->board.end(); line++) {
+    for (auto line = this->board.begin(); line != this->board.end(); line++) {
         for (auto column = (*line).begin(); column != (*line).end(); column++) {
             switch (*column) {
                 case -1:
@@ -50,22 +74,6 @@ void State::printState() {
 
         }
         cout << endl;
-    }
-
-*/
-    std::vector<std::vector<int>> lmao(5, vector<int>(4,1)) ;
-
-    for (auto i : this->blocks) {
-        for (auto j : i.second.getBros()) {
-            lmao[j.second][j.first] = i.first;
-        }
-    }
-
-    for (auto &i : lmao) {
-        for (auto &j : i) {
-            cout << j << " ";
-        }
-        cout << "\n";
     }
 }
 
@@ -96,44 +104,58 @@ vector<pair<pair<int, int>, int>> State::getAdjacents() {
     return pieces;
 }
 
-State State::moveBlock(pair<int, int> block, int direction) {
-    int x = block.first, y = block.second;
+bool State::validMove(Block block) {
+    vector<pair<int,int>> pos = block.getBros();
+
+    for(auto i : pos){
+        if (this->board[i.first][i.second] != 0)
+            return false;
+    }
+
+    return true;
+}
+
+State State::moveBlock(pair<int, int> pos, int direction) {
+    int x = pos.first, y = pos.second;
     vector<vector<int>> newBoard = this->board;
 
     int element = getElement(x, y);
     int shift = 0;
-    if (element != square) {
-        shift = 1;
-    }
-
-    switch (direction) {
+    Block &block = this->blocks.at(element);
+    Block fakeBlock = block;
+    
+    switch(direction) {
         case up:
-            newBoard[x][y] = element;
-            newBoard[x - 1][y] = element;
-            newBoard[x + shift][y] = empty;
-            break;
-
+        fakeBlock.setPos(-1, 0);
         case down:
-            newBoard[x][y] = element;
-            newBoard[x - shift][y] = empty;
-            newBoard[x + 1][y] = element;
-            break;
-
+        fakeBlock.setPos(1, 0);
         case right:
-            newBoard[x][y] = element;
-            newBoard[x][y + 1] = element;
-            newBoard[x][y - shift] = empty;
-            break;
-
+        fakeBlock.setPos(0, 1);
         case left:
-            newBoard[x][y] = element;
-            newBoard[x][y - 1] = element;
-            newBoard[x][y + shift] = empty;
-            break;
+        fakeBlock.setPos(0, -1);
     }
 
-    State newState(newBoard, pair<int, int>(0, 0), pair<int, int>(0, 0));
+    if(validMove(fakeBlock)) {
+        block.setBros(fakeBlock.getBros());
+    }
+    else {
+        cout <<" NOOO " << endl;
+    }
+
+    State newState(updateBoard());
     return newState;
+}
+
+std::vector<std::vector<int>> State::updateBoard(){
+    std::vector<std::vector<int>> lmao(5, vector<int>(4,1)) ;
+
+    for (auto i : this->blocks) {
+        for (auto j : i.second.getBros()) {
+            lmao[j.second][j.first] = i.first;
+        }
+    }
+
+    return lmao;
 }
 
 vector<State> State::getChildren() {
@@ -156,7 +178,7 @@ vector<State> State::getChildren() {
     //     " y: " << adjacents[0].first.second << 
     //     " direction: " << adjacents[0].second << endl; 
 
-    // moveBlock(adjacents[0].first, adjacents[0].second).printState();
+     moveBlock(adjacents[0].first, adjacents[0].second).printState();
 
     return children;
 }

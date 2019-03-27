@@ -4,17 +4,27 @@
 
 #include "Block.h"
 
+using namespace std;
+
 Block::Block(int index) {
     this->index = index;
 }
 
 void Block::addPos(int x, int y){
-    std::vector<std::pair<int,int>> a = this->getBros();
-    a.push_back(std::pair<int, int>(x,y));
-    this->brothers = a;
+    this->brothers.push_back(pair<int,int>(x,y));
 }
 
-std::vector<std::pair<int,int>> Block::getBros() {
+vector<pair<int,int>> Block::getBros() {
     return this->brothers;
 }
+void Block::setBros(vector<pair<int,int>> bros) {
+    this->brothers = bros;
+}
 
+
+void Block::setPos(int x, int y) {
+    for(auto i:this->brothers) {
+        i.first += x;
+        i.second += y;
+    }
+}
