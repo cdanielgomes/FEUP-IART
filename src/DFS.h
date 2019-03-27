@@ -1,3 +1,6 @@
+#ifndef DSF_H
+#define DSF_H
+
 #include "search.h"
 #include "state.h"
 #include <iostream>
