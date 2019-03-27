@@ -25,26 +25,96 @@ void State::printState() {
     }
 }
 
-vector<pair<int,int>> State::getAdjacent(pair<int, int> empty) {
-    vector<pair<int,int>> pieces;
+vector<pair<pair<int,int>,int>> State::getAdjacents() {
+    pair<int, int> empty = this->empty1;
+    vector<pair<pair<int,int>,int>> pieces;
 
-    if(empty.first < 4) {
-        pieces.push_back(pair<int,int>(empty.first+1, empty.second));
-    }
+    for(int i=0; i<2; i++) { // 2 empty blocks
+        if(empty.first < 4) {
+            pieces.push_back(pair<pair<int,int>,int>(pair<int,int>(empty.first+1, empty.second), up));
+        }
 
-    if(empty.first > 0) {
-        pieces.push_back(pair<int,int>(empty.first-1, empty.second));
-    }
+        if(empty.first > 0) {
+            pieces.push_back(pair<pair<int,int>, int>(pair<int,int>(empty.first-1, empty.second), down));
+        }
 
-    if(empty.second < 3) {
-        pieces.push_back(pair<int,int>(empty.first, empty.second + 1));
-    }
+        if(empty.second < 3) {
+            pieces.push_back(pair<pair<int,int>, int>(pair<int,int>(empty.first, empty.second + 1), left));
+        }
 
-    if(empty.second > 0) {
-        pieces.push_back(pair<int,int>(empty.first, empty.second - 1));
+        if(empty.second > 0) {
+            pieces.push_back(pair<pair<int,int>,int>(pair<int,int>(empty.first, empty.second - 1), right));
+        }        
+
+        empty = this->empty2;
     }
 
     return pieces;
+}
+
+State State::moveBlock(pair<int, int> block, int direction) {
+    int x=block.first, y=block.second;
+    vector<vector<int>> newBoard = this->board;
+
+    int element = getElement(x, y);
+    int shift = 0;
+    if(element != square) {
+        shift = 1;
+    }
+
+    switch(direction) {
+        case up:
+        newBoard[x][y] = element;
+        newBoard[x-1][y] = element;
+        newBoard[x+shift][y] = empty;
+        break;
+
+        case down:
+        newBoard[x][y] = element;
+        newBoard[x-shift][y] = empty;
+        newBoard[x+1][y] = element;
+        break;
+
+        case right:
+        newBoard[x][y] = element;
+        newBoard[x][y+1] = element;
+        newBoard[x][y-shift] = empty;
+        break;
+
+        case left:
+        newBoard[x][y] = element;
+        newBoard[x][y-1] = element;
+        newBoard[x][y+shift] = empty;
+        break;
+    }
+
+    State newState(newBoard, pair<int, int>(0,0), pair<int,int>(0,0));
+    return newState;
+}
+
+vector<State> State::getChildren() {
+    vector<State> children;
+    vector<pair<pair<int,int>,int>> adjacents = getAdjacents();
+
+    // erase empty spaces from adjacent blocks
+    for(auto it=adjacents.begin(); it!=adjacents.end(); it++) {
+        pair<int, int> block = (*it).first;
+        int element = getElement(block.first, block.second);
+        if(element == empty) { // empty space
+            adjacents.erase(it);
+            it--;
+            continue;
+        }
+        cout << getElement((*it).first.first, (*it).first.second) << endl;
+    }   
+
+    // cout << "x: " << adjacents[0].first.first << 
+    //     " y: " << adjacents[0].first.second << 
+    //     " direction: " << adjacents[0].second << endl; 
+
+    // moveBlock(adjacents[0].first, adjacents[0].second).printState();
+
+    return children;
 }
 
 int State::getElement(int x, int y) {

@@ -22,6 +22,7 @@ public:
     Node(State state, Node * parentNode, int depth, int pathCost);
     void printState();
     State getState();
+    std::vector<Node> getChildren();
     
 };
 

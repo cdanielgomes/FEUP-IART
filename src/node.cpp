@@ -11,3 +11,11 @@ void Node::printState() {
 State Node::getState() {
     return this->state;
 }
+
+vector<Node> Node::getChildren() {
+    vector<Node> children;
+
+    this->state.getChildren();
+
+    return children;
+}

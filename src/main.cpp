@@ -26,7 +26,7 @@ int main() {
     Search search = Search();
 
     search.addToQueue(root);
-    //search.search();    
+    search.search();    
 
 }
 

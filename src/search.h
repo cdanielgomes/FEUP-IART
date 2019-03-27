@@ -31,6 +31,7 @@ public:
     void addToQueue(Node node);
     bool addToVisited(Node node);
     void search();
+    bool isGoalState(Node node);
 };
 
 #endif /* SEARCH_H */
