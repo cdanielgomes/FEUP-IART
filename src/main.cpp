@@ -1,9 +1,9 @@
 #include "search.h"
-
+#include "DFS.h"
 using namespace std;
 
 int main() {
-
+/*
     vector<vector<int>> initialBoard = {
             {1, 4, 4, 2},
             {3, 4, 4, 4},
@@ -23,4 +23,20 @@ int main() {
     search.addToQueue(root);
     search.search();
 */
+
+// Create a graph given in the above diagram
+    Graph g(4) = Graph();
+    g.addEdge(0, 1);
+    g.addEdge(0, 2);
+    g.addEdge(1, 2);
+    g.addEdge(2, 0);
+    g.addEdge(2, 3);
+    g.addEdge(3, 3);
+
+    cout << "Following is Depth First Traversal"
+            " (starting from vertex 2) \n";
+    g.DFS(2);
+
+    return 0;
+
 }
