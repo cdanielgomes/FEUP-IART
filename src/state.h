@@ -1,6 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 
+#include "Block.h"
 #include <vector>
 #include <utility>
 #include <iomanip>
@@ -20,9 +21,12 @@ class State {
     std::vector<std::vector<int>> board;
     std::pair<int, int> empty1;
     std::pair<int, int> empty2;
+    std::unordered_map<int, Block> blocks;
+
 
 public:
     State(std::vector<std::vector<int>> board, std::pair<int, int> empty1, std::pair<int, int> empty2);
+
     void printState();
     std::vector<std::pair<std::pair<int,int>, int>> getAdjacents();
     std::vector<State> getChildren();
