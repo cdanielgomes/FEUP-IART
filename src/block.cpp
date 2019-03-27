@@ -19,8 +19,12 @@ void Block::setBros(vector<pair<int,int>> bros) {
 
 
 void Block::setPos(int x, int y) {
-    for(auto i:this->brothers) {
+    for(auto &i:this->brothers) {
         i.first += x;
         i.second += y;
     }
+}
+
+int Block::getIndex() {
+    return this->index;
 }

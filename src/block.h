@@ -2,6 +2,7 @@
 #define BLOCK_H
 
 #include <vector>
+#include <iostream>
 
 class Block {
 private:
@@ -15,6 +16,7 @@ public:
     void setPos(int x, int y);
     std::vector<std::pair<int,int>> getBros();
     void setBros(std::vector<std::pair<int,int>> bros);
+    int getIndex();
 };
 
 
