@@ -6,7 +6,7 @@ using namespace std;
     : board(board), empty1(empty1), empty2(empty2) {}
 */
 
-State::State(std::vector<std::vector<int>> board) {
+State::State(std::vector<std::vector<int>> board) : board(board) {
     int x = 0;
     int y = 0;
 
@@ -30,7 +30,7 @@ State::State(std::vector<std::vector<int>> board) {
 
 }
 
-State::State(std::vector<std::vector<int>> board, std::pair<int, int> empty1, std::pair<int, int> empty2) {
+State::State(std::vector<std::vector<int>> board, std::pair<int, int> empty1, std::pair<int, int> empty2) : board(board) {
 
     int x = 0;
     int y = 0;
@@ -58,18 +58,18 @@ State::State(std::vector<std::vector<int>> board, std::pair<int, int> empty1, st
 
 
 void State::printState() {
-
-    for (auto line = this->board.begin(); line != this->board.end(); line++) {
-        for (auto column = (*line).begin(); column != (*line).end(); column++) {
-            switch (*column) {
-                case -1:
+    for (auto line : this->board) {
+        for (auto element : line) {
+            
+            switch (element) {
+                case 4:
                     cout << setw(5) << "x" << "|";
                     break;
                 case 0:
                     cout << setw(5) << " " << "|";
                     break;
                 default:
-                    cout << setw(5) << *column << "|";
+                    cout << setw(5) << element << "|";
             }
 
         }

@@ -1,10 +1,5 @@
-//
-// Created by daniel on 27-03-2019.
-//
-
-#ifndef FEUP_IART_BLOCK_H
-#define FEUP_IART_BLOCK_H
-
+#ifndef BLOCK_H
+#define BLOCK_H
 
 #include <vector>
 
@@ -23,4 +18,4 @@ public:
 };
 
 
-#endif //FEUP_IART_BLOCK_H
+#endif /* BLOCK_H */

@@ -1,8 +1,4 @@
-//
-// Created by daniel on 27-03-2019.
-//
-
-#include "Block.h"
+#include "block.h"
 
 using namespace std;
 

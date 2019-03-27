@@ -1,7 +1,7 @@
 #ifndef STATE_H
 #define STATE_H
 
-#include "Block.h"
+#include "block.h"
 #include <vector>
 #include <utility>
 #include <iomanip>
