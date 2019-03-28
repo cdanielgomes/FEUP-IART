@@ -30,6 +30,7 @@ public:
     int getCost();
     int getDepth();
     int getPathCost();
+    bool equal(Node &rhs);
 };
 
 #endif /* NODE_H */

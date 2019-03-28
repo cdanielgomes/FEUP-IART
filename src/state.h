@@ -33,7 +33,8 @@ public:
     void calculateEmpties();
     void setBoard(std::vector<std::vector<int>> board);
     void setBlocks(std::unordered_map<int, Block> blocks);
-   bool endState();
+    bool endState();
+    std::vector<std::vector<int>> getBoard() ;
 };
 
 #endif /* STATE_H */

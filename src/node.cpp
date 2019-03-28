@@ -6,9 +6,11 @@ Node::Node(State state, Node *parentNode, int depth, int pathCost) : parentNode(
                                                                      pathCost(pathCost), state(move(state)) {}
 
 Node::Node(State state, Node *parentNode, int depth, int pathCost, int cost) : parentNode(parentNode), depth(depth),
-                                                                     pathCost(pathCost), state(move(state)), cost(cost) {}
+                                                                               pathCost(pathCost), state(move(state)),
+                                                                               cost(cost) {}
 
-                                                                     Node::Node() {};
+Node::Node() {};
+
 void Node::printState() {
     this->state.printState();
 }
@@ -40,4 +42,8 @@ int Node::getDepth() {
 
 int Node::getPathCost() {
     return this->pathCost;
+}
+
+bool Node::equal(Node &rhs) {
+    return this->state.getBoard() == rhs.getState().getBoard();
 }

@@ -3,11 +3,14 @@
 //
 
 #include "astar.h"
+#include <algorithm>
 
 astar::astar(State initial) : initialState(initial) {}
 
 
-int astar::distanceTofinal(Node &node) {
+int astar::nearTofinal(Node &node) {
+
+
 
 }
 
@@ -48,13 +51,27 @@ void astar::childrenNode(Node &n) {
 void astar::solve() {
     Node firstN(this->initialState, nullptr, 0, 0, 0);
     this->childrenNode(firstN);
+
     Node n;
 
     do {
         n = this->nodesExplore.top();
+
+        if (find(n)) {
+            this->nodesExplore.pop();
+            continue;
+        }
         n.getState().printState();
-        this->nodesExplore.pop();
+        this->path.push_back(n);
+        this->childrenNode(n);
 
     } while (!n.getState().endState());
 
+}
+
+bool astar::find(Node &h) {
+    for (auto i : this->path) {
+        if (i.equal(h))
+            return true;
+    }
 }

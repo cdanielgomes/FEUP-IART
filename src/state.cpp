@@ -222,7 +222,7 @@ vector<State> State::getChildren() {
     return children;
 }
 
-int State::getElement(int x, int y) {
+int State::getElement(int x, int y)  {
     return this->board[x][y];
 }
 
@@ -248,4 +248,8 @@ bool State::endState() {
     auto i = getBlock(-1).getBros();
 
     return i == vector;
+}
+
+vector<std::vector<int>> State::getBoard()  {
+    return this->board;
 }

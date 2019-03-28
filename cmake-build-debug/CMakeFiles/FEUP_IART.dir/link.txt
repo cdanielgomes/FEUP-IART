@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/FEUP_IART.dir/src/main.cpp.o CMakeFiles/FEUP_IART.dir/src/node.cpp.o CMakeFiles/FEUP_IART.dir/src/search.cpp.o CMakeFiles/FEUP_IART.dir/src/state.cpp.o CMakeFiles/FEUP_IART.dir/src/block.cpp.o CMakeFiles/FEUP_IART.dir/src/DFS.cpp.o CMakeFiles/FEUP_IART.dir/src/astar.cpp.o  -o FEUP_IART 

@@ -1,0 +1,3 @@
+/home/daniel/Desktop/Faculdade/IART/FEUP-IART/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/daniel/Desktop/Faculdade/IART/FEUP-IART/cmake-build-debug/CMakeFiles/FEUP_IART.dir
+/home/daniel/Desktop/Faculdade/IART/FEUP-IART/cmake-build-debug/CMakeFiles/edit_cache.dir

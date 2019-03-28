@@ -28,7 +28,7 @@ private:
 
     void calculateCost(Node &node);
 
-    int distanceTofinal(Node &node);
+    int nearTofinal(Node &node);
 
     int manhattam(Node &node);
 
@@ -36,6 +36,8 @@ private:
 
     int heuristic(Node &node);
     void childrenNode(Node &n);
+
+    bool find(Node &h);
 
 
 public:
