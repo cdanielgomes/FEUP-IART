@@ -26,12 +26,14 @@ public:
     std::vector<std::pair<std::pair<int,int>, int>> getAdjacents();
     std::vector<State> getChildren();
     bool moveBlock(std::pair<int,int> block, int direction, State &newState);
+    Block getBlock(int i);
     int getElement(int x, int y);
     bool validMove(Block block);
     void calculateBoard();
     void calculateEmpties();
     void setBoard(std::vector<std::vector<int>> board);
     void setBlocks(std::unordered_map<int, Block> blocks);
+   bool endState();
 };
 
 #endif /* STATE_H */

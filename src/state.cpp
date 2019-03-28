@@ -2,15 +2,16 @@
 
 using namespace std;
 
-State::State(){}
+State::State() {}
 
 State::State(std::vector<std::vector<int>> board) : board(board) {
     int x = 0;
     int y = 0;
+    int countEmpty = 0;
 
     for (auto &i : board) {
         for (auto &j: i) {
-            if(j != 0) {
+            if (j != 0) {
                 try {
                     Block &block = this->blocks.at(j);
                     block.addPos(x, y);
@@ -19,6 +20,11 @@ State::State(std::vector<std::vector<int>> board) : board(board) {
                     block.addPos(x, y);
                     this->blocks.insert(std::pair<int, Block>(j, block));
                 }
+            } else {
+                if (countEmpty == 0) {
+                    this->empty1 = pair<int, int>(x, y);
+                    countEmpty++;
+                } else this->empty2 = pair<int, int>(x, y);
             }
             y++;
         }
@@ -28,7 +34,8 @@ State::State(std::vector<std::vector<int>> board) : board(board) {
 
 }
 
-State::State(std::vector<std::vector<int>> board, std::pair<int, int> empty1, std::pair<int, int> empty2) : board(board) {
+State::State(std::vector<std::vector<int>> board, std::pair<int, int> empty1, std::pair<int, int> empty2) : board(
+        board) {
 
     int x = 0;
     int y = 0;
@@ -37,7 +44,7 @@ State::State(std::vector<std::vector<int>> board, std::pair<int, int> empty1, st
 
     for (auto &i : board) {
         for (auto &j: i) {
-            if(j != 0) {
+            if (j != 0) {
                 try {
                     Block &block = this->blocks.at(j);
                     block.addPos(x, y);
@@ -57,7 +64,7 @@ State::State(std::vector<std::vector<int>> board, std::pair<int, int> empty1, st
 void State::printState() {
     for (auto line : this->board) {
         for (auto element : line) {
-            
+
             switch (element) {
                 case -1:
                     cout << setw(5) << "x" << "|";
@@ -104,9 +111,9 @@ vector<pair<pair<int, int>, int>> State::getAdjacents() {
 }
 
 bool State::validMove(Block block) {
-    vector<pair<int,int>> pos = block.getBros();
+    vector<pair<int, int>> pos = block.getBros();
 
-    for(auto i : pos){
+    for (auto i : pos) {
         if (this->board[i.first][i.second] != 0 && this->board[i.first][i.second] != block.getIndex())
             return false;
     }
@@ -121,30 +128,29 @@ bool State::moveBlock(pair<int, int> pos, int direction, State &newState) {
     int element = getElement(x, y);
     int shift = 0;
     Block fakeBlock = this->blocks.at(element);
-    
-    switch(direction) {
+
+    switch (direction) {
         case up:
-        fakeBlock.setPos(-1, 0);
-        break;
+            fakeBlock.setPos(-1, 0);
+            break;
         case down:
-        fakeBlock.setPos(1, 0);
-        break;
+            fakeBlock.setPos(1, 0);
+            break;
         case right:
-        fakeBlock.setPos(0, 1);
-        break;
+            fakeBlock.setPos(0, 1);
+            break;
         case left:
-        fakeBlock.setPos(0, -1);
-        break;
-        default: 
-        break;
+            fakeBlock.setPos(0, -1);
+            break;
+        default:
+            break;
     }
 
-    if(validMove(fakeBlock)) {
+    if (validMove(fakeBlock)) {
         newState.setBlocks(this->blocks);
         Block &block = newState.blocks.at(element);
         block.setBros(fakeBlock.getBros());
-    }
-    else {
+    } else {
         return false;
     }
 
@@ -152,7 +158,7 @@ bool State::moveBlock(pair<int, int> pos, int direction, State &newState) {
     return true;
 }
 
-void State::calculateBoard(){
+void State::calculateBoard() {
     this->board = std::vector<std::vector<int>>(5, vector<int>(4, 0));
 
     for (auto i : this->blocks) {
@@ -167,32 +173,31 @@ void State::calculateBoard(){
 void State::calculateEmpties() {
     int x = 0, y = 0, empty = 1;
 
-    for(auto i : this->board) {
-        for(auto element : i) {
-            if(element == 0) {
-                if(empty == 1) {
+    for (auto i : this->board) {
+        for (auto element : i) {
+            if (element == 0) {
+                if (empty == 1) {
                     this->empty1.first = x;
-                    this-> empty1.second = y;
+                    this->empty1.second = y;
 
-                    cout << "empty 1 -> x: " << x << " y: " << y << endl;
+                    //cout << "empty 1 -> x: " << x << " y: " << y << endl;
                     empty++;
-                }
-                else{
+                } else {
                     this->empty2.first = x;
                     this->empty2.first = y;
-                    cout << "empty 2 -> x: " << x << " y: " << y << endl << endl;
+                    //cout << "empty 2 -> x: " << x << " y: " << y << endl << endl;
                 }
             }
             y++;
         }
-        y=0;
+        y = 0;
         x++;
     }
 }
 
 vector<State> State::getChildren() {
     vector<State> children;
-    vector<pair<pair<int, int>, int>> adjacents = getAdjacents();
+    vector<pair<pair<int, int>, int>> adjacents = this->getAdjacents();
 
     // erase empty spaces from adjacent blocks
     for (auto it = adjacents.begin(); it != adjacents.end(); it++) {
@@ -206,10 +211,10 @@ vector<State> State::getChildren() {
         //cout << getElement((*it).first.first, (*it).first.second) << endl;
     }
 
-    for(auto a : adjacents) {
+    for (auto a : adjacents) {
         State newState = State();
-        if(moveBlock(a.first, a.second, newState)) {
-            newState.printState();
+        if (moveBlock(a.first, a.second, newState)) {
+            //newState.printState();
             children.push_back(newState);
         }
     }
@@ -225,6 +230,22 @@ void State::setBoard(std::vector<std::vector<int>> board) {
     this->board = board;
 }
 
-void State::setBlocks(std::unordered_map<int, Block> blocks){
+void State::setBlocks(std::unordered_map<int, Block> blocks) {
     this->blocks = blocks;
+}
+
+Block State::getBlock(int i) {
+    auto it = this->blocks.find(i);
+    return it->second;
+}
+
+bool State::endState() {
+    vector<pair<int,int>> vector = {pair<int, int>(3,1),
+            pair<int, int>(3,2),
+            pair<int, int>(4,1),
+            pair<int, int>(4,2)};
+
+    auto i = getBlock(-1).getBros();
+
+    return i == vector;
 }

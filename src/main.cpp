@@ -1,26 +1,32 @@
 #include "search.h"
 #include "DFS.h"
+#include "astar.h"
+
 using namespace std;
 
 int main() {
 
     vector<vector<int>> initialBoard = {
-            {1, -1, -1, 2},
-            {3, -1, -1, 4},
-            {5, 6, 7, 8},
-            {5, 9, 10, 8},
-            {11, 0, 0, 12}
+            {1,  -1, -1, 2},
+            {3,  -1, -1, 4},
+            {5,  6,  7,  8},
+            {5,  10, 10, 8},
+            {11, 0,  0,  12}
     };
 
-    pair<int,int> empty1(4, 1); // coordinates of initial empty space
-    pair<int,int> empty2(4, 2); // coordinates of the other initial empty space
+    pair<int, int> empty1(4, 1); // coordinates of initial empty space
+    pair<int, int> empty2(4, 2); // coordinates of the other initial empty space
 
     State initialState(initialBoard, empty1, empty2);
-    Node root(initialState, nullptr, 0, 0);
-    Search search = Search();
 
-    search.addToQueue(root);
-    search.search();    
+    //
+    /// Node root(initialState, nullptr, 0, 0);
+    //Search search = Search();
+
+    astar a(initialState);
+    a.solve();
+    //search.addToQueue(root);
+    //search.search();
 }
 
 
@@ -39,4 +45,4 @@ int main() {
 
     return 0;*/
 
-}
+
