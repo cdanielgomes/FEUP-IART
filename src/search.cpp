@@ -4,30 +4,18 @@ using namespace std;
 
 Search::Search() {}
 
-bool Search::addToVisited(Node node) {
-    bool equal = true;
-
-    for(auto known : this->visited) {
-        for(int i=0; i<5;i++) {
-            for(int j=0; j<4; j++){
-                if(known.getState().getElement(i, j) != node.getState().getElement(i, j)) {
-                    equal = false;
-                }
-            }
-        }
-        if(equal) {
-            return false;
-        }
-        equal = true;
-    }
-
-    return this->visited.insert(node).second;
+void Search::addToVisited(Node node) {
+    this->visited.push_front(node);
 }
 
 void Search::addToQueue(Node node) {
-    if(addToVisited(node)) { // added -> hasn't visited node before
-        this->frontier.push(node);
+    for(auto known : this->visited) {
+       if(known.getState().getBoard() == node.getState().getBoard()){
+           return;
+       }
     }
+
+    this->frontier.push(node);
 }
 
 bool Search::isGoalState(Node node) {
@@ -42,21 +30,23 @@ bool Search::isGoalState(Node node) {
     return true;
 }
 
-void Search::search() {
+Node Search::search() {
     int iteration = 0;
 
-    while(!this->frontier.empty()) {
+    while(true) {
         cout << "Iteration " << iteration++ << ":" << endl;
 
         Node node = this->frontier.front();
         this->frontier.pop();
+        addToVisited(node);
         node.printState();
-        if(isGoalState(node)) {cout << "Got it\n"; return;}
+        if(isGoalState(node)) {cout << "Got it\n"; return node;}
 
         vector<Node> children = node.getChildren();
         for(auto node : children) {
             addToQueue(node);
         }
+
     }
 
 }

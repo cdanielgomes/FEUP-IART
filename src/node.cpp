@@ -51,7 +51,3 @@ int Node::getPathCost() {
 bool Node::equal(Node &rhs) {
     return this->state.getBoard() == rhs.getState().getBoard();
 }
-
-bool Node::operator<(const Node &comp) const {
-    return true;
-}

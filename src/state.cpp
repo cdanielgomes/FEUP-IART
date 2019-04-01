@@ -184,7 +184,7 @@ void State::calculateEmpties() {
                     empty++;
                 } else {
                     this->empty2.first = x;
-                    this->empty2.first = y;
+                    this->empty2.second = y;
                     //cout << "empty 2 -> x: " << x << " y: " << y << endl << endl;
                 }
             }
