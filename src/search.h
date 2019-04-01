@@ -4,13 +4,13 @@
 #include "node.h"
 #include <queue>
 #include <set>
+#include <unistd.h>
 
 class Search {
 private:
     //comparator for the set
     struct cmp {
         bool operator() (Node a, Node b) const {
-            
             for(int i=0; i<5;i++) {
                 for(int j=0; j<4; j++){
                     if(a.getState().getElement(i, j) != b.getState().getElement(i, j)) {
@@ -24,7 +24,7 @@ private:
     };
 
     std::queue<Node> frontier;
-    std::set<Node, cmp> visited;
+    std::set<Node> visited;
 
 public:
     Search();

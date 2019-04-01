@@ -5,6 +5,22 @@ using namespace std;
 Search::Search() {}
 
 bool Search::addToVisited(Node node) {
+    bool equal = true;
+
+    for(auto known : this->visited) {
+        for(int i=0; i<5;i++) {
+            for(int j=0; j<4; j++){
+                if(known.getState().getElement(i, j) != node.getState().getElement(i, j)) {
+                    equal = false;
+                }
+            }
+        }
+        if(equal) {
+            return false;
+        }
+        equal = true;
+    }
+
     return this->visited.insert(node).second;
 }
 
@@ -27,18 +43,20 @@ bool Search::isGoalState(Node node) {
 }
 
 void Search::search() {
-    int iterations = 0;
+    int iteration = 0;
 
     while(!this->frontier.empty()) {
-        cout << "Iteration " << iterations++ << ":" << endl;
+        cout << "Iteration " << iteration++ << ":" << endl;
 
         Node node = this->frontier.front();
         this->frontier.pop();
-
         node.printState();
-        if(isGoalState(node)) {return;}
+        if(isGoalState(node)) {cout << "Got it\n"; return;}
 
-        node.getChildren();
+        vector<Node> children = node.getChildren();
+        for(auto node : children) {
+            addToQueue(node);
+        }
     }
 
 }

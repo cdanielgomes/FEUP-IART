@@ -19,14 +19,15 @@ int main() {
 
     State initialState(initialBoard, empty1, empty2);
 
-    //
-    /// Node root(initialState, nullptr, 0, 0);
-    //Search search = Search();
+    
+    Node root(initialState, nullptr, 0, 0);
+    Search search = Search();
+    search.addToQueue(root);
+    search.search();
 
-    astar a(initialState);
-    a.solve();
-    //search.addToQueue(root);
-    //search.search();
+    // astar a(initialState);
+    // a.solve();
+
 }
 
 
