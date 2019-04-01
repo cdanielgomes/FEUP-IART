@@ -15,14 +15,18 @@ void Node::printState() {
     this->state.printState();
 }
 
-State Node::getState() {
+State Node::getState() const {
     return this->state;
 }
 
 vector<Node> Node::getChildren() {
     vector<Node> children;
 
-    this->state.getChildren();
+    vector<State> childrenStates = this->state.getChildren();
+
+    for(auto state : childrenStates) {
+        children.push_back(Node(state, this, ++this->depth, 1, this->cost + 1));
+    }
 
     return children;
 }
@@ -46,4 +50,8 @@ int Node::getPathCost() {
 
 bool Node::equal(Node &rhs) {
     return this->state.getBoard() == rhs.getState().getBoard();
+}
+
+bool Node::operator<(const Node &comp) const {
+    return true;
 }

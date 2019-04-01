@@ -13,7 +13,7 @@ class Node {
 private:
     State state;
     Node * parentNode;
-    // operator
+    
     int depth;
     int pathCost;
     int cost;
@@ -24,13 +24,14 @@ public:
     Node(State state, Node * parentNode, int depth, int pathCost, int cost);
     Node();
     void printState();
-    State getState();
+    State getState() const;
     std::vector<Node> getChildren();
     Node * getParent();
     int getCost();
     int getDepth();
     int getPathCost();
     bool equal(Node &rhs);
+    bool operator<(const Node &comp) const;
 };
 
 #endif /* NODE_H */
