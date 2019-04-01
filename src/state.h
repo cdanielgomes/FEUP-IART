@@ -34,7 +34,7 @@ public:
     void setBoard(std::vector<std::vector<int>> board);
     void setBlocks(std::unordered_map<int, Block> blocks);
     bool endState();
-    std::vector<std::vector<int>> getBoard() ;
+    std::vector<std::vector<int>> getBoard();
     std::vector<std::pair<int,int>> getEmpties();
 };
 

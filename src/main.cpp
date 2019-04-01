@@ -1,6 +1,6 @@
 //#include "search.h"
 #include "DFS.h"
-//#include "astar.h"
+#include "astar.h"
 
 using namespace std;
 

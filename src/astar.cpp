@@ -1,7 +1,3 @@
-//
-// Created by daniel on 27-03-2019.
-//
-
 #include "astar.h"
 #include <algorithm>
 
@@ -149,7 +145,7 @@ void astar::solve() {
 
     //int i = 0;
 
-    std::cout << "Caulating ...." << std::endl;
+    std::cout << "Calculating ...." << std::endl;
 
     do {
 

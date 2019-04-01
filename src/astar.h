@@ -1,7 +1,3 @@
-//
-// Created by daniel on 27-03-2019.
-//
-
 #ifndef FEUP_IART_ASTAR_H
 #define FEUP_IART_ASTAR_H
 
