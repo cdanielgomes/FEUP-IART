@@ -19,13 +19,14 @@ State Node::getState() const {
     return this->state;
 }
 
-vector<Node> Node::getChildren() {
-    vector<Node> children;
+vector<Node *> Node::getChildren() {
+    vector<Node*> children;
 
     vector<State> childrenStates = this->state.getChildren();
 
     for(auto state : childrenStates) {
-        children.push_back(Node(state, this, ++this->depth, 1, this->cost + 1));
+        Node * child = new Node(state, this, this->depth + 1, 1, this->cost + 1);
+        children.push_back(child);
     }
 
     return children;
@@ -49,5 +50,5 @@ int Node::getPathCost() {
 }
 
 bool Node::equal(Node &rhs) {
-    return this->state.getBoard() == rhs.getState().getBoard();
+    return (this->state.getBoard() == rhs.getState().getBoard());
 }

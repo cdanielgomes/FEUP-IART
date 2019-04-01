@@ -8,15 +8,13 @@
 
 class Search {
 private:
-    std::queue<Node> frontier;
-    std::deque<Node> visited;
-
+    std::queue<Node *> frontier;
 public:
     Search();
-    void addToQueue(Node node);
-    void addToVisited(Node node);
-    Node search();
-    bool isGoalState(Node node);
+    void addToQueue(Node * node);
+    Node * search();
+    bool isGoalState(Node * node);
+    bool expand(Node * node, Node * ancestor);
 };
 
 #endif /* SEARCH_H */

@@ -25,7 +25,7 @@ public:
     Node();
     void printState();
     State getState() const;
-    std::vector<Node> getChildren();
+    std::vector<Node *> getChildren();
     Node * getParent();
     int getCost();
     int getDepth();
