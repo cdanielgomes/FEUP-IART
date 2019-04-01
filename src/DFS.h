@@ -12,7 +12,7 @@ private:
 
     int V; // No. of vertices
     std::list<int> *adj; // Pointer to an array containing adjacency lists
-    void DFSaux(int v, bool visited[]); // A function used by DFS
+    void DFSaux(int v, bool visited[],int cost); // A function used by DFS
 
 
 public:
@@ -20,7 +20,7 @@ public:
     Graph(int v); // Constructor
     void addEdge(int v, int w); // function to add an edge to graph
     void DFS(int v); // prints DFS of the complete graph
-    void addEdgeGraph(int v, int w);
+    void DFSIterative(int v);
 
 };
 
