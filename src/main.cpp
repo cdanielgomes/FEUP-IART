@@ -6,6 +6,7 @@ using namespace std;
 
 int main() {
 
+
     vector<vector<int>> initialBoard = {
             {1,  -1, -1, 2},
             {3,  -1, -1, 4},
@@ -20,10 +21,14 @@ int main() {
     State initialState(initialBoard, empty1, empty2);
 
     //
-    /// Node root(initialState, nullptr, 0, 0);
+     //Node root(initialState, nullptr, 0, 0);
     //Search search = Search();
 
-    astar a(initialState);
+
+    Node * root = new Node(initialState, nullptr, 0, 0, 9999);
+
+
+    astar a(root);
     a.solve();
     //search.addToQueue(root);
     //search.search();

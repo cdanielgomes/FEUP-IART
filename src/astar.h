@@ -16,33 +16,29 @@ class astar {
 private:
 
     struct cmp {
-        bool operator() (Node lhs, Node rhs) const {
-            return lhs.getCost() < rhs.getCost();
+        bool operator()(Node * lhs, Node * rhs) const {
+            return lhs->getCost() > rhs->getCost();
         }
     };
 
 
-    std::priority_queue<Node, std::vector<Node>, cmp> nodesExplore;
-    std::vector<Node> path;
-    State initialState;
+    std::priority_queue<Node *, std::vector<Node *>, cmp> nodesExplore;
+    std::vector<Node *> visited;
+    Node * initialState;
 
-    void calculateCost(Node &node);
 
-    int nearTofinal(Node &node);
+    double heuristic(Node * node);
 
-    int manhattam(Node &node);
+    void childrenNode(Node * n);
 
-    int euclidean(Node &node);
+    double nearToEmpties(Node * n);
 
-    int heuristic(Node &node);
-    void childrenNode(Node &n);
-
-    bool find(Node &h);
+    bool find(Node * h);
 
 
 public:
 
-    astar(State initial);
+    astar(Node * initial);
 
     void solve();
 

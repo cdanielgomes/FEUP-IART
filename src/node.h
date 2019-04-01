@@ -16,8 +16,7 @@ private:
     // operator
     int depth;
     int pathCost;
-    int cost;
-
+    double cost;
 
 public:
     Node(State state, Node * parentNode, int depth, int pathCost);
@@ -30,7 +29,8 @@ public:
     int getCost();
     int getDepth();
     int getPathCost();
-    bool equal(Node &rhs);
+    bool equal(Node * rhs);
+    void setCost(int i);
 };
 
 #endif /* NODE_H */
