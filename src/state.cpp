@@ -216,7 +216,6 @@ vector<State> State::getChildren() {
     for (auto a : adjacents) {
         State newState = State();
         if (moveBlock(a.first, a.second, newState)) {
-            //newState.printState();
             children.push_back(newState);
         }
     }
