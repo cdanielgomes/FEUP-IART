@@ -45,17 +45,19 @@ Node * Search::search() {
         this->frontier.pop();
 
         if(!expand(node, node->getParent())){
+            cout << "preciso disto\n";
             continue;
         }
 
-        //if(iteration > 13000)
-            node->printState();
+        cout << node->getDepth() << endl;
+
+        node->printState();
 
         if(isGoalState(node)) {cout << "Got it\n"; return node;}
 
         auto children = node->getChildren();
         for(auto child : children) {
-            addToQueue(node);
+            addToQueue(child);
         }
         
     }

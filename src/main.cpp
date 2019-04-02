@@ -7,15 +7,15 @@ using namespace std;
 int main() {
 
     vector<vector<int>> initialBoard = {
-            {1,  -1, -1, 2},
-            {3,  -1, -1, 4},
-            {5,  6,  7,  8},
-            {5,  9, 10, 8},
-            {11, 0,  0,  12}
+            {1,  6, 7, 2},
+            {3,  9, 10, 4},
+            {5,  -1, -1,  8},
+            {5,  -1, -1, 8},
+            {0, 11, 12,  0}
     };
 
-    pair<int, int> empty1(4, 1); // coordinates of initial empty space
-    pair<int, int> empty2(4, 2); // coordinates of the other initial empty space
+    pair<int, int> empty1(4, 0); // coordinates of initial empty space
+    pair<int, int> empty2(4, 3); // coordinates of the other initial empty space
 
     State initialState(initialBoard, empty1, empty2);
 
