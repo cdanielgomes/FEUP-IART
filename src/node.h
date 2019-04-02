@@ -23,6 +23,7 @@ private:
 public:
     Node(State state, Node * parentNode, int depth, int pathCost);
     Node();
+    Node(State state, Node * parentNode, int depth, int pathCost, double cost);
 
     Node(State state, Node * parentNode, int depth);
     void printState();
