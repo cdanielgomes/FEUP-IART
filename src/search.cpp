@@ -4,37 +4,52 @@ using namespace std;
 
 Search::Search() {}
 
-bool Search::expand(Node * node, Node * ancestor) {
-    if(ancestor == nullptr){ // reached root
+bool Search::expand(Node *node, Node *ancestor) {
+    if (ancestor == nullptr) { // reached root
         return true;
     }
 
-    if(ancestor->equal(*node)){ // this node has already been created in this branch
+    if (ancestor->equal(*node)) { // this node has already been created in this branch
         return false;
     }
 
     return expand(node, ancestor->getParent());
 }
 
-void Search::addToQueue(Node * node) {
+bool Search::addToQueue(Node *node) {
+    State visitedState = node->getState();
 
-    if(expand(node, node->getParent())) {
-        this->frontier.push(node);
+    for (auto i : visitedState.getChildren()) {
+        Node *n = new Node(i, node, node->getDepth() + 1, node->getPathCost() + 1);
+        if (!find(n)) {
+            if (n->getState().endState()) {
+                return true;
+            }
+            else
+                this->frontier.push(n);
+        }
+
     }
+
+    /*
+if(expand(node, node->getParent())) {
+    this->frontier.push(node);
+}*/
 }
 
-bool Search::isGoalState(Node * node) {
-    for(int x=3; x<5;x++) {
-        for(int y=1; y<3; y++) { //goal positions
-            if(node->getState().getElement(x, y) != -1) {
+bool Search::isGoalState(Node *node) {
+    for (int x = 3; x < 5; x++) {
+        for (int y = 1; y < 3; y++) { //goal positions
+            if (node->getState().getElement(x, y) != -1) {
                 return false;
-            } 
+            }
         }
     }
 
     return true;
 }
 
+/*
 Node * Search::search() {
     int iteration = 0;
 
@@ -60,4 +75,59 @@ Node * Search::search() {
         
     }
 
+}*/
+
+Node *Search::search() {
+    int iteration = 0;
+
+    Node *n = frontier.front();
+    frontier.pop();
+    addToQueue(n);
+
+    cout << "while \n";
+    while (!frontier.empty()) {
+
+
+        n = this->frontier.front();
+        this->explored.push_back(n);
+        this->frontier.pop();
+
+        cout << "Iteration " << iteration++ << ":" << endl;
+
+        /*if(!expand(node, node->getParent())){
+            continue;
+        }*/
+
+        //if(iteration > 13000)
+        n->printState();
+
+        if(this->addToQueue(n)){
+            return n;
+        }
+
+    }
+
+    cout << "NO SOLUTION\n";
+
+}
+
+bool Search::find(Node *h) {
+    for (auto i : this->explored) {
+        if (i->equal(*h))
+            return true;
+    }
+
+    std::queue<Node *> auxList1 = frontier;
+    std::queue<Node *> auxList2;
+
+    while (!auxList1.empty()) {
+
+        Node *l = auxList1.front();
+        if (l->equal(*h))
+            return true;
+
+        auxList1.pop();
+    }
+
+    return false;
 }
