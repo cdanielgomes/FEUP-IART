@@ -128,7 +128,7 @@ double astar::heuristic(Node *node) {
 bool astar::childrenNode(Node * n, bool a) {
 
     auto k = n->getState().getChildren();
-    
+
     for (auto i : k) {
         Node *child = new Node(i, n, n->getDepth() + 1, n->getPathCost() + 1);
 
@@ -167,6 +167,7 @@ void astar::solve(bool s) {
 // node with least cost to explore
         n = this->nodesExplore.top();
 
+        this->nodesExplore.pop();
 
         if (n->getState().endState()) break;
 
@@ -176,7 +177,6 @@ void astar::solve(bool s) {
             delete(n);
             continue;
         }
-        this->nodesExplore.pop();
 
        // n->printState();
 

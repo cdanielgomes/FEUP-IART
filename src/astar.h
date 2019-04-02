@@ -6,27 +6,8 @@
 #include "node.h"
 #include <math.h>
 #include <bits/unordered_set.h>
+#include "common.h"
 
-namespace std {
-    template<>
-    struct hash<Node *> {
-        size_t
-        operator()(Node *obj) const {
-            return hash<string>()(obj->toString());
-        }
-    };
-}
-
-
-namespace std {
-    template<>
-    struct equal_to<Node *> {
-        bool
-        operator()(Node *obj, Node *obj2) const {
-            return obj->equal(obj2);
-        }
-    };
-}
 class astar {
 
 private:
