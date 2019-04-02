@@ -9,12 +9,14 @@
 class Search {
 private:
     std::queue<Node *> frontier;
+    std::vector<Node *> explored;
 public:
     Search();
-    void addToQueue(Node * node);
+    bool addToQueue(Node * node);
     Node * search();
     bool isGoalState(Node * node);
     bool expand(Node * node, Node * ancestor);
+    bool find(Node * h);
 };
 
 #endif /* SEARCH_H */
