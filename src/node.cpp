@@ -11,6 +11,10 @@ Node::Node(State state, Node *parentNode, int depth, int pathCost, int cost) : p
 
 Node::Node() {};
 
+
+Node::Node(State state, Node *parentNode, int depth) : state(state), depth(depth), parentNode(parentNode) {}
+
+
 void Node::printState() {
     this->state.printState();
     std::cout << "cost: " << (float)this->cost << std::endl;

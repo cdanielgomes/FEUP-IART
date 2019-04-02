@@ -25,11 +25,14 @@ int main() {
     //Search search = Search();
 
 
-    Node * root = new Node(initialState, nullptr, 0, 0, 9999);
+    Node * root = new Node(initialState, nullptr, 0, 0);
 
+    DFS dfs = DFS(root);
 
-    astar a(root);
-    a.solve();
+    dfs.solve();
+
+    //astar a(root);
+    //a.solve();
     //search.addToQueue(root);
     //search.search();
 }
