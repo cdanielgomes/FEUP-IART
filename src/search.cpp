@@ -21,16 +21,17 @@ bool Search::addToQueue(Node *node) {
 
     for (auto i : visitedState.getChildren()) {
         Node *n = new Node(i, node, node->getDepth() + 1, node->getPathCost() + 1);
+
         if (!find(n)) {
             if (n->getState().endState()) {
                 return true;
-            }
-            else
+            } else {
                 this->frontier.push(n);
+            }
         }
 
     }
-
+return false;
     /*
 if(expand(node, node->getParent())) {
     this->frontier.push(node);
@@ -84,7 +85,6 @@ Node *Search::search() {
     frontier.pop();
     addToQueue(n);
 
-    cout << "while \n";
     while (!frontier.empty()) {
 
 
@@ -92,6 +92,7 @@ Node *Search::search() {
         this->explored.push_back(n);
         this->frontier.pop();
 
+        cout << "Depth = " << n->getDepth() << endl;
         cout << "Iteration " << iteration++ << ":" << endl;
 
         /*if(!expand(node, node->getParent())){
@@ -101,7 +102,8 @@ Node *Search::search() {
         //if(iteration > 13000)
         n->printState();
 
-        if(this->addToQueue(n)){
+        if (this->addToQueue(n)) {
+            cout << "return \n";
             return n;
         }
 
@@ -116,18 +118,5 @@ bool Search::find(Node *h) {
         if (i->equal(*h))
             return true;
     }
-
-    std::queue<Node *> auxList1 = frontier;
-    std::queue<Node *> auxList2;
-
-    while (!auxList1.empty()) {
-
-        Node *l = auxList1.front();
-        if (l->equal(*h))
-            return true;
-
-        auxList1.pop();
-    }
-
     return false;
 }

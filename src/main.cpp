@@ -1,6 +1,8 @@
+
 #include "search.h"
 #include "DFS.h"
 #include "astar.h"
+#include <chrono>
 
 using namespace std;
 
@@ -23,8 +25,13 @@ int main() {
     Node * root = new Node(initialState, nullptr, 0, 0);
     Search search = Search();
     search.addToQueue(root);
+    auto start = chrono::high_resolution_clock::now();
     search.search();
+    auto stop = chrono::high_resolution_clock::now();
 
+    auto duration = chrono::duration_cast<std::chrono::minutes>(stop -start);
+
+    cout << endl << "The algorithm had ran for " << duration.count() << endl;
     // astar a(initialState);
     // a.solve();
 
