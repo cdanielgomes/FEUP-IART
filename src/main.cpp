@@ -1,4 +1,4 @@
-//#include "search.h"
+#include "search.h"
 //#include "DFS.h"
 #include "astar.h"
 #include "node.h"
@@ -10,33 +10,38 @@ int main() {
 
 
     vector<vector<int>> initialBoard = {
-            {1,  -1, -1, 2},
-            {3,  -1, -1, 5},
-            {3,  8,  11,  6},
-            {4,  9,  10, 7},
-            {4, 0,  0,  7}
+            {1,  8, 11, 2},
+            {3,  9, 10, 5},
+            {3,  -1,  -1,  6},
+            {4,  -1,  -1, 7},
+            {0, 12,  13,  0}
     };
 
-    pair<int, int> empty1(4, 1); // coordinates of initial empty space
-    pair<int, int> empty2(4, 2); // coordinates of the other initial empty space
+    pair<int, int> empty1(4, 0); // coordinates of initial empty space
+    pair<int, int> empty2(4, 3); // coordinates of the other initial empty space
 
     State initialState(initialBoard, empty1, empty2);
+    Node * root = new Node(initialState, nullptr, 0, 0, 0);
 
-    //
-    //Node root(initialState, nullptr, 0, 0);
-
-
-    Node * root = new Node(initialState, nullptr, 0, 0);
 
     auto start = std::chrono::high_resolution_clock::now();
 
-     astar a(root);
-    a.solveAStar();
+    /* A* */
+    // astar a(root);
+    // a.solveAStar();
+
+    /* BFS */
+    Search bfs = Search();
+    bfs.addToQueue(root);
+    bfs.search();
+
     auto end = std::chrono::high_resolution_clock::now();
+
+    bfs.printSolution();
 
     auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
 
-    cout << "DURATION: " << time << "ms";
+    cout << "DURATION: " << time << "ms\n";
 
 }
 

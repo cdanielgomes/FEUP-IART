@@ -35,31 +35,43 @@ bool Search::isGoalState(Node * node) {
     return true;
 }
 
-Node * Search::search() {
-    int iteration = 0;
+void Search::search() {
+    int iteration = 1;
 
     while(true) {
-        cout << "Iteration " << iteration++ << ":" << endl;
-
         Node * node = this->frontier.front();
         this->frontier.pop();
 
         if(!expand(node, node->getParent())){
-            cout << "preciso disto\n";
             continue;
         }
+        iteration++;
 
-        cout << node->getDepth() << endl;
-
-        node->printState();
-
-        if(isGoalState(node)) {cout << "Got it\n"; return node;}
+        if(isGoalState(node)) {cout << "Got it\n"; this->leaf = node; return;}
 
         auto children = node->getChildren();
         for(auto child : children) {
             addToQueue(child);
         }
-        
     }
 
+}
+
+void Search::printSolution() {
+    deque<Node *> solution;
+
+    solution.push_back(this->leaf);
+    Node * parent = this->leaf->getParent();
+    
+    while(parent != nullptr) {
+        solution.push_back(parent);
+        parent = parent->getParent();
+    }
+
+    cout << "Solution:\n";
+    while(!solution.empty()) {
+        parent = solution.back();
+        solution.pop_back();
+        parent->printState();
+    }
 }

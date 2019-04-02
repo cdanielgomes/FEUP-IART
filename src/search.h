@@ -9,10 +9,12 @@
 class Search {
 private:
     std::queue<Node *> frontier;
+    Node * leaf;
 public:
     Search();
     void addToQueue(Node * node);
-    Node * search();
+    void search();
+    void printSolution();
     bool isGoalState(Node * node);
     bool expand(Node * node, Node * ancestor);
 };

@@ -18,7 +18,7 @@ void Node::printState() {
     this->state.printState();
     std::cout << "cost: " << (float)this->cost << std::endl;
     std::cout << "depth: " << this->depth << std::endl;
-    std::cout << "pathCost: " << (float)this->pathCost << std::endl;
+    std::cout << "pathCost: " << (float)this->pathCost << std::endl << std::endl;
 
 }
 
@@ -32,7 +32,7 @@ vector<Node *> Node::getChildren() {
     vector<State> childrenStates = this->state.getChildren();
 
     for(auto state : childrenStates) {
-        Node * child = new Node(state, this, this->depth + 1, 1, this->cost + 1);
+        Node * child = new Node(state, this, this->depth + 1, this->pathCost + this->cost, this->cost + 1);
         children.push_back(child);
     }
 
