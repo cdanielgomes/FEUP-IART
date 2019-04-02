@@ -16,8 +16,8 @@ int main() {
             {4, 0,  0,  7}
     };
 
-    pair<int, int> empty1(4, 1); // coordinates of initial empty space
-    pair<int, int> empty2(4, 2); // coordinates of the other initial empty space
+    pair<int, int> empty1(4, 0); // coordinates of initial empty space
+    pair<int, int> empty2(4, 3); // coordinates of the other initial empty space
 
     State initialState(initialBoard, empty1, empty2);
 

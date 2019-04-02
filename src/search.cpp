@@ -4,20 +4,29 @@ using namespace std;
 
 Search::Search() {}
 
-bool Search::addToVisited(Node node) {
-    return this->visited.insert(node).second;
+bool Search::expand(Node * node, Node * ancestor) {
+    if(ancestor == nullptr){ // reached root
+        return true;
+    }
+
+    if(ancestor->equal(node)){ // this node has already been created in this branch
+        return false;
+    }
+
+    return expand(node, ancestor->getParent());
 }
 
-void Search::addToQueue(Node node) {
-    if(addToVisited(node)) { // added -> hasn't visited node before
+void Search::addToQueue(Node * node) {
+
+    if(expand(node, node->getParent())) {
         this->frontier.push(node);
     }
 }
 
-bool Search::isGoalState(Node node) {
+bool Search::isGoalState(Node * node) {
     for(int x=3; x<5;x++) {
         for(int y=1; y<3; y++) { //goal positions
-            if(node.getState().getElement(x, y) != -1) {
+            if(node->getState().getElement(x, y) != -1) {
                 return false;
             } 
         }
@@ -26,19 +35,31 @@ bool Search::isGoalState(Node node) {
     return true;
 }
 
-void Search::search() {
-    int iterations = 0;
+Node * Search::search() {
+    int iteration = 0;
 
-    while(!this->frontier.empty()) {
-        cout << "Iteration " << iterations++ << ":" << endl;
+    while(true) {
+        cout << "Iteration " << iteration++ << ":" << endl;
 
-        Node node = this->frontier.front();
+        Node * node = this->frontier.front();
         this->frontier.pop();
 
-        node.printState();
-        if(isGoalState(node)) {return;}
+        if(!expand(node, node->getParent())){
+            cout << "preciso disto\n";
+            continue;
+        }
 
-        node.getChildren();
+        cout << node->getDepth() << endl;
+
+        node->printState();
+
+        if(isGoalState(node)) {cout << "Got it\n"; return node;}
+
+        auto children = node->getChildren();
+        for(auto child : children) {
+            addToQueue(child);
+        }
+        
     }
 
 }

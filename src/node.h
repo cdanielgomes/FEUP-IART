@@ -13,7 +13,7 @@ class Node {
 private:
     State state;
     Node * parentNode;
-    // operator
+    
     int depth;
     int pathCost; //used in a* e  greedy
     double cost; // used in a* e  greedy
@@ -26,8 +26,8 @@ public:
 
     Node(State state, Node * parentNode, int depth);
     void printState();
-    State getState();
-    std::vector<Node> getChildren();
+    State getState() const;
+    std::vector<Node *> getChildren();
     Node * getParent();
     int getCost();
     int getDepth();
