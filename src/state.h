@@ -38,6 +38,7 @@ public:
     std::vector<std::vector<int>> getBoard();
     std::vector<std::pair<int,int>> getEmpties();
     int getOp();
+    void setOp(int op);
 };
 
 #endif /* STATE_H */

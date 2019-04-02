@@ -22,7 +22,7 @@ int main() {
 
     State initialState(initialBoard, empty1, empty2);
     Node * root = new Node(initialState, nullptr, 0, 0, 0);
-
+    root->getState().setOp(-1);
 
     auto start = std::chrono::high_resolution_clock::now();
 
