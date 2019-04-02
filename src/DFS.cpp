@@ -53,9 +53,9 @@ Node *DFS::solve() {
             this->visited.insert(node);
 
 
-            cout << "Iteration " << iteration++ << ":" << endl;
+           cout << "Iteration " << iteration++ << ":" << endl;
 
-            node->printState();
+          //  node->printState();
 
             this->addStack(node);
         }
@@ -67,7 +67,11 @@ Node *DFS::solve() {
         this->deep += 1;
     }
 
+
+
     cout << "terminou com o depth = " << this->deep << " e o max " << this->max << endl;
+
+
 
 }
 

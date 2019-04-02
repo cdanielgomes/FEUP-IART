@@ -159,7 +159,7 @@ void astar::solve(bool s) {
 
     Node *n;
 
-    //int i = 0;
+    int i = 0;
 
     std::cout << "Calculating ...." << std::endl;
 
@@ -177,13 +177,13 @@ void astar::solve(bool s) {
             delete(n);
             continue;
         }
-
-       // n->printState();
+std::cout << i << "\n";
+        n->printState();
 
         this->visited.insert(n);
 
         this->childrenNode(n, s);
-//i++;
+i++;
     } while (!this->nodesExplore.empty());
 
     //backtrack to the initial node
@@ -199,12 +199,12 @@ void astar::solve(bool s) {
         n = b;
 
     }
-/*
+
     for (auto it = a.rbegin(); it != a.rend(); ++it) {
         (*it)->printState();
         std::cout << std::endl;
     }
-*/
+
     std::cout << "Necessary moves: " << a.size() << std::endl;
 
 }
