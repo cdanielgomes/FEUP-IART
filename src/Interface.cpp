@@ -14,25 +14,18 @@ using namespace std;
 
 vector<vector<vector<int>>> board = {
         {
-                {1, -1, -1, 2},
-                {3, -1, -1, 5},
-                {3, 6, 7, 8},
-                {4, 9, 10, 11},
-                {4, 0, 0, 11}
+                {1, 10, 9, 2},
+                {3, 7, 6, 5},
+                {3, -1, -1, 8},
+                {4, -1, -1, 11},
+                {0, 12, 13, 0}
         },
-        {
-                {1, -1, -1, 2},
-                {1, -1, -1, 3},
-                {4, 4, 5, 5},
-                {6, 6, 7,  7},
-                {8, 0, 0, 9}
-        }
 
 };
 
 
-pair<int, int> empty1(4, 1); // coordinates of initial empty space
-pair<int, int> empty2(4, 2); // coordinates of the other initial empty space
+pair<int, int> empty1(4, 0); // coordinates of initial empty space
+pair<int, int> empty2(4, 3); // coordinates of the other initial empty space
 
 
 
@@ -41,29 +34,31 @@ Interface::Interface() {}
 
 void Interface::dificulty() {
 
-    cout << "1 - Level easy\n"
-            "2 - Level medium\n"
-            "3 - Level hard \n"
-            "4 - exit\n";
+    // cout << "1 - Level easy\n"
+    //         "2 - Level medium\n"
+    //         "3 - Level hard \n"
+    //         "4 - exit\n";
 
 
-    cin >> dificultyL;
+    // cin >> dificultyL;
 
-    switch (dificultyL) {
-        case 1:
-            alg();
-            break;
-        case 2:
-            alg();
-            break;
-        case 3:
+    // switch (dificultyL) {
+    //     case 1:
+    //         alg();
+    //         break;
+    //     case 2:
+    //         alg();
+    //         break;
+    //     case 3:
 
-            alg();
-            break;
-        default:
-            setOut();
-            return;
-    }
+    //         alg();
+    //         break;
+    //     default:
+    //         setOut();
+    //         return;
+    // }
+
+    alg();
 }
 
 void lmao(Node *n) {
@@ -75,6 +70,8 @@ void lmao(Node *n) {
     i.search();
 
     auto end = std::chrono::high_resolution_clock::now();
+
+    i.printSolution();
 
     auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
 
@@ -140,9 +137,11 @@ void Interface::alg() {
             "4- Greedy\n"
             "5- back\n";
 
-    State initialState(board[dificultyL], empty1, empty2);
+    //State initialState(board[dificultyL], empty1, empty2);
+    State initialState(board[0], empty1, empty2);
 
-    Node *n = new Node(initialState, nullptr, 0, 0);
+    Node *n = new Node(initialState, nullptr, 0, 0, 0);
+    n->getState().setOp(-1);
 
     cin >> this->algorithm;
 
