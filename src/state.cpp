@@ -267,3 +267,7 @@ vector<pair<int, int>> State::getEmpties() {
 int State::getOp() {
     return this->op;
 }
+
+void State::setOp(int op) {
+    this->op = op;
+}

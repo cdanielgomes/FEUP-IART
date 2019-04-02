@@ -72,6 +72,31 @@ void Search::printSolution() {
     while(!solution.empty()) {
         parent = solution.back();
         solution.pop_back();
+
+        switch(parent->getState().getOp()) {
+            case -1:
+            break;
+            
+            case 0:
+            cout << "Move up\n";
+            break;
+
+            case 1:
+            cout << "Move right\n";
+            break;
+
+            case 2:
+            cout << "Move down\n";
+            break;
+
+            case 3:
+            cout << "Move left\n";
+            break;
+
+            default:
+            break;
+        }
+
         parent->printState();
     }
 }
