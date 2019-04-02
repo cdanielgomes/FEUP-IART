@@ -32,6 +32,7 @@ public:
     int getPathCost();
     bool equal(Node &rhs);
     bool operator<(const Node &comp) const;
+    std::string const toString();
 };
 
 #endif /* NODE_H */

@@ -21,7 +21,8 @@ int main() {
 
     State initialState(initialBoard, empty1, empty2);
 
-    
+    initialState.printState();
+
     Node * root = new Node(initialState, nullptr, 0, 0);
     Search search = Search();
     search.addToQueue(root);
@@ -32,6 +33,8 @@ int main() {
     auto duration = chrono::duration_cast<std::chrono::minutes>(stop -start);
 
     cout << endl << "The algorithm had ran for " << duration.count() << endl;
+
+
     // astar a(initialState);
     // a.solve();
 

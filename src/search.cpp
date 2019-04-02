@@ -4,6 +4,10 @@ using namespace std;
 
 Search::Search() {}
 
+bool tryEnd(Node * n){
+    n
+}
+
 bool Search::expand(Node *node, Node *ancestor) {
     if (ancestor == nullptr) { // reached root
         return true;
@@ -29,9 +33,12 @@ bool Search::addToQueue(Node *node) {
                 this->frontier.push(n);
             }
         }
+        else{
+            delete(n);
+        }
 
     }
-return false;
+    return false;
     /*
 if(expand(node, node->getParent())) {
     this->frontier.push(node);
@@ -89,7 +96,7 @@ Node *Search::search() {
 
 
         n = this->frontier.front();
-        this->explored.push_back(n);
+        this->explored.insert(n);
         this->frontier.pop();
 
         cout << "Depth = " << n->getDepth() << endl;
@@ -103,7 +110,7 @@ Node *Search::search() {
         n->printState();
 
         if (this->addToQueue(n)) {
-            cout << "return \n";
+            cout << "FOUND SEARCH \n";
             return n;
         }
 
@@ -114,9 +121,11 @@ Node *Search::search() {
 }
 
 bool Search::find(Node *h) {
-    for (auto i : this->explored) {
-        if (i->equal(*h))
-            return true;
+
+    auto  it = this->explored.insert(h);
+
+    if (!it.second){
+        return true;
     }
-    return false;
+    else false;
 }

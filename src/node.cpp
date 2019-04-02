@@ -52,3 +52,14 @@ int Node::getPathCost() {
 bool Node::equal(Node &rhs) {
     return (this->state.getBoard() == rhs.getState().getBoard());
 }
+
+string const Node::toString() {
+    string a;
+
+    for(auto i : this->state.getBoard()){
+        for(auto j : i){
+            a.append(std::to_string(j));
+        }
+    }
+    return a;
+}
