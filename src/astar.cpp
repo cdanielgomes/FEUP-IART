@@ -125,8 +125,10 @@ double astar::heuristic(Node *node) {
 
 }
 
-bool astar::childrenNode(Node *n, bool a) {
+bool astar::childrenNode(Node * n, bool a) {
+
     auto k = n->getState().getChildren();
+    
     for (auto i : k) {
         Node *child = new Node(i, n, n->getDepth() + 1, n->getPathCost() + 1);
 
@@ -145,7 +147,6 @@ bool astar::childrenNode(Node *n, bool a) {
 
 void astar::solveAStar() {
     solve(true);
-
 }
 
 void astar::solveGreedy() {
@@ -153,6 +154,7 @@ void astar::solveGreedy() {
 }
 
 void astar::solve(bool s) {
+
     this->childrenNode(this->initialState, s);
 
     Node *n;
@@ -162,11 +164,8 @@ void astar::solve(bool s) {
     std::cout << "Calculating ...." << std::endl;
 
     do {
-
 // node with least cost to explore
-
         n = this->nodesExplore.top();
-        this->nodesExplore.pop();
 
 
         if (n->getState().endState()) break;
@@ -177,8 +176,9 @@ void astar::solve(bool s) {
             delete(n);
             continue;
         }
+        this->nodesExplore.pop();
 
-      //  n->printState();
+       // n->printState();
 
         this->visited.insert(n);
 

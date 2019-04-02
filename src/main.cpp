@@ -1,6 +1,7 @@
 //#include "search.h"
 //#include "DFS.h"
 #include "astar.h"
+#include "node.h"
 #include <chrono>
 
 using namespace std;
@@ -16,8 +17,8 @@ int main() {
             {4, 0,  0,  7}
     };
 
-    pair<int, int> empty1(4, 0); // coordinates of initial empty space
-    pair<int, int> empty2(4, 3); // coordinates of the other initial empty space
+    pair<int, int> empty1(4, 1); // coordinates of initial empty space
+    pair<int, int> empty2(4, 2); // coordinates of the other initial empty space
 
     State initialState(initialBoard, empty1, empty2);
 
@@ -25,12 +26,9 @@ int main() {
     //Node root(initialState, nullptr, 0, 0);
 
 
-    Node *root = new Node(initialState, nullptr, 0, 0);
+    Node * root = new Node(initialState, nullptr, 0, 0);
+
     auto start = std::chrono::high_resolution_clock::now();
-
-    //DFS dfs = DFS(root, 40);
-
-     // dfs.solve();
 
      astar a(root);
     a.solveAStar();
