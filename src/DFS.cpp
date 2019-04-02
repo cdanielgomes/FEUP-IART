@@ -3,25 +3,78 @@
 
 using namespace std;
 
-DFS::DFS(Node *n) {
+DFS::DFS(Node *n, int max) {
 
+    this->max = max;
     this->initialNode = n;
+    this->frontier.push(n);
 
 }
 
-void DFS::solve() {
-    Node *node = this->recursive(this->initialNode);
+bool DFS::find(Node *h) {
 
-    if (nullptr == node)
-        cout << "No solution\n";
-    else printPath(node);
+    auto it = this->visited.insert(h);
+
+    if (!it.second) {
+        return true;
+    } else false;
+}
+
+void DFS::addStack(Node *n) {
+
+    if (n->getDepth() <= deep) {
+        for (auto i : n->getState().getChildren()) {
+            Node *node = new Node(i, n, n->getDepth() + 1);
+            this->frontier.push(node);
+        }
+    }
+}
+
+
+Node *DFS::solve() {
+    int iteration = 0;
+
+    if (initialNode->getState().endState()) { cout << "Started with a solution\n"; }
+
+    while (this->deep <= this->max) {
+
+        while (!this->frontier.empty()) {
+
+            auto node = this->frontier.top();
+
+            this->frontier.pop();
+
+            if (find(node)) {
+                delete (node);
+                continue;
+            }
+
+            if (node->getState().endState()) return node;
+            this->visited.insert(node);
+
+
+            cout << "Iteration " << iteration++ << ":" << endl;
+
+            node->printState();
+
+            this->addStack(node);
+        }
+
+
+        this->visited.clear();
+        this->frontier.push(this->initialNode);
+
+        this->deep += 1;
+    }
+
+    cout << "terminou com o depth = " << this->deep << " e o max " << this->max << endl;
 
 }
 
 void DFS::printPath(Node *n) {
 
     vector<Node *> a;
-    Node * b;
+    Node *b;
     while (!n->equal(initialNode)) {
 
         b = n->getParent();
@@ -36,33 +89,6 @@ void DFS::printPath(Node *n) {
     }
 }
 
-Node *DFS::recursive(Node *n) {
-
-    for (auto i : n->getState().getChildren()) {
-
-        if (i.endState())
-            return new Node(i, n, n->getDepth() + 1);
-
-        Node *nNode = new Node(i, n, n->getDepth() + 1);
-
-        if (this->find(nNode)){
-            continue;
-        }
-
-
-        nNode->printState();
-
-        this->visited.push_back(nNode);
-        Node * x = recursive(nNode);
-
-
-       if(x == nullptr)
-           return nullptr;
-       else x;
-
-    }
-
-}
 
 /*
 void DFS::DFSaux(Node n, bool visited[], int pathCost) {
@@ -104,15 +130,4 @@ void DFS::DFSIterative(Node n) {
     }
 }
 */
-
-bool DFS::find(Node *h) {
-
-    for (auto i : this->visited) {
-
-        if (i->equal(h)){
-            return true;
-
-        }
-    }
-}
 

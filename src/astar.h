@@ -5,8 +5,28 @@
 #include <queue>
 #include "node.h"
 #include <math.h>
+#include <bits/unordered_set.h>
+
+namespace std {
+    template<>
+    struct hash<Node *> {
+        size_t
+        operator()(Node *obj) const {
+            return hash<string>()(obj->toString());
+        }
+    };
+}
 
 
+namespace std {
+    template<>
+    struct equal_to<Node *> {
+        bool
+        operator()(Node *obj, Node *obj2) const {
+            return obj->equal(obj2);
+        }
+    };
+}
 class astar {
 
 private:
@@ -19,13 +39,13 @@ private:
 
 
     std::priority_queue<Node *, std::vector<Node *>, cmp> nodesExplore;
-    std::vector<Node *> visited;
+    std::unordered_set<Node *> visited;
     Node * initialState;
 
 
     double heuristic(Node * node);
 
-    void childrenNode(Node * n);
+    bool childrenNode(Node * n, bool a);
 
     double nearToEmpties(Node * n);
 
@@ -36,8 +56,9 @@ public:
 
     astar(Node * initial);
 
-    void solve();
-
+    void solveAStar();
+    void solveGreedy();
+    void solve(bool solve);
 
 };
 

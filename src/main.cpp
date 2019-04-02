@@ -1,6 +1,7 @@
 //#include "search.h"
-#include "DFS.h"
+//#include "DFS.h"
 #include "astar.h"
+#include <chrono>
 
 using namespace std;
 
@@ -9,10 +10,10 @@ int main() {
 
     vector<vector<int>> initialBoard = {
             {1,  -1, -1, 2},
-            {3,  -1, -1, 4},
-            {5,  6,  7,  8},
-            {5,  9, 10, 8},
-            {11, 0,  0,  12}
+            {3,  -1, -1, 5},
+            {3,  8,  11,  6},
+            {4,  9,  10, 7},
+            {4, 0,  0,  7}
     };
 
     pair<int, int> empty1(4, 1); // coordinates of initial empty space
@@ -21,20 +22,24 @@ int main() {
     State initialState(initialBoard, empty1, empty2);
 
     //
-     //Node root(initialState, nullptr, 0, 0);
-    //Search search = Search();
+    //Node root(initialState, nullptr, 0, 0);
 
 
-    Node * root = new Node(initialState, nullptr, 0, 0);
+    Node *root = new Node(initialState, nullptr, 0, 0);
+    auto start = std::chrono::high_resolution_clock::now();
 
-    DFS dfs = DFS(root);
+    //DFS dfs = DFS(root, 40);
 
-    dfs.solve();
+     // dfs.solve();
 
-    //astar a(root);
-    //a.solve();
-    //search.addToQueue(root);
-    //search.search();
+     astar a(root);
+    a.solveAStar();
+    auto end = std::chrono::high_resolution_clock::now();
+
+    auto time = std::chrono::duration_cast<std::chrono::milliseconds>(end-start).count();
+
+    cout << "DURATION: " << time << "ms";
+
 }
 
 /*

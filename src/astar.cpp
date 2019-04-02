@@ -1,8 +1,7 @@
 #include "astar.h"
 #include <algorithm>
 
-astar::astar(Node * initial)
-{
+astar::astar(Node *initial) {
     this->initialState = initial;
 }
 
@@ -98,7 +97,7 @@ double emptyAdjacent(Node &n) {
     return mult;
 }
 
-double astar::nearToEmpties(Node * node) {
+double astar::nearToEmpties(Node *node) {
 
     State state = node->getState();
     auto k = md(*node);
@@ -115,7 +114,7 @@ double astar::nearToEmpties(Node * node) {
     return sum;
 }
 
-double astar::heuristic(Node * node) {
+double astar::heuristic(Node *node) {
     auto b = node->getState().getBlock(-1).getBros();
 //near to final position
     //return euclidean_distance(b.front().first, 3, b.front().second, 1) + manhattam_distance(b.front().first, 3, b.front().second, 1);
@@ -126,22 +125,37 @@ double astar::heuristic(Node * node) {
 
 }
 
-void astar::childrenNode(Node  * n) {
+bool astar::childrenNode(Node *n, bool a) {
     auto k = n->getState().getChildren();
     for (auto i : k) {
         Node *child = new Node(i, n, n->getDepth() + 1, n->getPathCost() + 1);
 
-        (child)->setCost(this->heuristic(child) + nPiecesBetween(*child));
+        int l;
+        if (a) {
+            l = this->heuristic(child) + nPiecesBetween(*child) + child->getPathCost();
+        } else
+            l = this->heuristic(child) + nPiecesBetween(*child);
 
-        this->nodesExplore.emplace(child);
+        (child)->setCost(l);
+
+        this->nodesExplore.push(child);
 
     }
 }
 
-void astar::solve() {
-    this->childrenNode(this->initialState);
+void astar::solveAStar() {
+    solve(true);
 
-    Node * n;
+}
+
+void astar::solveGreedy() {
+    solve(false);
+}
+
+void astar::solve(bool s) {
+    this->childrenNode(this->initialState, s);
+
+    Node *n;
 
     //int i = 0;
 
@@ -160,12 +174,15 @@ void astar::solve() {
 
         if (find(n)) {
             this->nodesExplore.pop();
+            delete(n);
             continue;
         }
 
-        this->visited.push_back(n);
+      //  n->printState();
 
-        this->childrenNode(n);
+        this->visited.insert(n);
+
+        this->childrenNode(n, s);
 //i++;
     } while (!this->nodesExplore.empty());
 
@@ -182,21 +199,23 @@ void astar::solve() {
         n = b;
 
     }
-
-    std::cout << a.size() << std::endl;
-
+/*
     for (auto it = a.rbegin(); it != a.rend(); ++it) {
         (*it)->printState();
         std::cout << std::endl;
     }
+*/
+    std::cout << "Necessary moves: " << a.size() << std::endl;
 
 }
 
-bool astar::find(Node * h) {
 
-    for (auto i : this->visited) {
-        if (i->equal(h))
-            return true;
-    }
+bool astar::find(Node *h) {
+
+    auto it = this->visited.insert(h);
+
+    if (!it.second) {
+        return true;
+    } else false;
 }
 
