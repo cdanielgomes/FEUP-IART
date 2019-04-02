@@ -15,14 +15,16 @@ private:
     Node * parentNode;
     
     int depth;
-    int pathCost;
-    int cost;
-
+    int pathCost; //used in a* e  greedy
+    double cost; // used in a* e  greedy
+    std::vector<Node *> * childs;
+    bool visited = false;
 
 public:
     Node(State state, Node * parentNode, int depth, int pathCost);
     Node(State state, Node * parentNode, int depth, int pathCost, int cost);
     Node();
+    Node(State state, Node * parentNode, int depth);
     void printState();
     State getState() const;
     std::vector<Node *> getChildren();
@@ -30,9 +32,12 @@ public:
     int getCost();
     int getDepth();
     int getPathCost();
-    bool equal(Node &rhs);
-    bool operator<(const Node &comp) const;
-    std::string const toString();
+    bool equal(Node * rhs);
+    void setCost(int i);
+    bool isVisited();
+    void setVisited();
+    std::vector<Node *> * getChilds();
+
 };
 
 #endif /* NODE_H */

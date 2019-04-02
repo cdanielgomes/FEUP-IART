@@ -1,5 +1,9 @@
+<<<<<<< HEAD
+//#include "search.h"
+=======
 
 #include "search.h"
+>>>>>>> 2d35b5b6e993c3e7e072fe710783180d50d39e8a
 #include "DFS.h"
 #include "astar.h"
 #include <chrono>
@@ -7,6 +11,7 @@
 using namespace std;
 
 int main() {
+
 
     vector<vector<int>> initialBoard = {
             {1,  -1, -1, 2},
@@ -21,7 +26,10 @@ int main() {
 
     State initialState(initialBoard, empty1, empty2);
 
-    initialState.printState();
+    //
+     //Node root(initialState, nullptr, 0, 0);
+    //Search search = Search();
+
 
     Node * root = new Node(initialState, nullptr, 0, 0);
     Search search = Search();
@@ -38,10 +46,16 @@ int main() {
     // astar a(initialState);
     // a.solve();
 
+    dfs.solve();
+
+    //astar a(root);
+    //a.solve();
+    //search.addToQueue(root);
+    //search.search();
 }
 
-
 /*
+
     Graph g(4);
     g.addEdge(0, 1);
     g.addEdge(0, 2);
@@ -52,8 +66,8 @@ int main() {
 
     cout << "Following is Depth First Traversal"
             " (starting from vertex 2) \n";
-    g.DFS(2);
+    g.DFSIterative(2);
+    //g.DFS(2);
 
-    return 0;*/
-
-
+    return 0;
+}*/

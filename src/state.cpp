@@ -168,6 +168,7 @@ void State::calculateBoard() {
     }
 
     calculateEmpties();
+
 }
 
 void State::calculateEmpties() {
@@ -182,7 +183,8 @@ void State::calculateEmpties() {
 
                     //cout << "empty 1 -> x: " << x << " y: " << y << endl;
                     empty++;
-                } else {
+                }
+                else  {
                     this->empty2.first = x;
                     this->empty2.second = y;
                     //cout << "empty 2 -> x: " << x << " y: " << y << endl << endl;
@@ -221,7 +223,7 @@ vector<State> State::getChildren() {
     return children;
 }
 
-int State::getElement(int x, int y)  {
+int State::getElement(int x, int y) {
     return this->board[x][y];
 }
 
@@ -239,16 +241,24 @@ Block State::getBlock(int i) {
 }
 
 bool State::endState() {
-    vector<pair<int,int>> vector = {pair<int, int>(3,1),
-            pair<int, int>(3,2),
-            pair<int, int>(4,1),
-            pair<int, int>(4,2)};
+    vector<pair<int, int>> vector = {pair<int, int>(3, 1),
+                                     pair<int, int>(3, 2),
+                                     pair<int, int>(4, 1),
+                                     pair<int, int>(4, 2)};
 
     auto i = getBlock(-1).getBros();
 
     return i == vector;
 }
 
-vector<std::vector<int>> State::getBoard()  {
+vector<std::vector<int>> State::getBoard() {
     return this->board;
+}
+
+vector<pair<int, int>> State::getEmpties() {
+    vector<pair<int, int>> empties;
+
+    empties.push_back(this->empty1);
+    empties.push_back(this->empty2);
+    return empties;
 }
