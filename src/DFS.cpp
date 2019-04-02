@@ -45,15 +45,15 @@ Node *DFS::recursive(Node *n) {
 
         Node *nNode = new Node(i, n, n->getDepth() + 1);
 
-        if (find(nNode))
+        if (this->find(nNode)){
             continue;
+        }
 
 
         nNode->printState();
 
-        Node * x = recursive(nNode);
-
         this->visited.push_back(nNode);
+        Node * x = recursive(nNode);
 
 
        if(x == nullptr)
@@ -62,7 +62,6 @@ Node *DFS::recursive(Node *n) {
 
     }
 
-    return nullptr;
 }
 
 /*
@@ -109,8 +108,11 @@ void DFS::DFSIterative(Node n) {
 bool DFS::find(Node *h) {
 
     for (auto i : this->visited) {
-        if (i->equal(h))
+
+        if (i->equal(h)){
             return true;
+
+        }
     }
 }
 
