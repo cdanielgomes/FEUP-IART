@@ -53,7 +53,7 @@ Node *DFS::solve() {
             this->visited.insert(node);
 
 
-           cout << "Iteration " << iteration++ << ":" << endl;
+          // cout << "Iteration " << iteration++ << ":" << endl;
 
           //  node->printState();
 

@@ -177,8 +177,8 @@ void astar::solve(bool s) {
             delete(n);
             continue;
         }
-std::cout << i << "\n";
-        n->printState();
+//std::cout << i << "\n";
+      //  n->printState();
 
         this->visited.insert(n);
 
