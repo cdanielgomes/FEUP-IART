@@ -148,6 +148,7 @@ bool State::moveBlock(pair<int, int> pos, int direction, State &newState) {
 
     if (validMove(fakeBlock)) {
         newState.setBlocks(this->blocks);
+        newState.op = direction;
         Block &block = newState.blocks.at(element);
         block.setBros(fakeBlock.getBros());
     } else {
@@ -261,4 +262,8 @@ vector<pair<int, int>> State::getEmpties() {
     empties.push_back(this->empty1);
     empties.push_back(this->empty2);
     return empties;
+}
+
+int State::getOp() {
+    return this->op;
 }

@@ -16,6 +16,7 @@ class State {
     std::pair<int, int> empty1;
     std::pair<int, int> empty2;
     std::unordered_map<int, Block> blocks;
+    int op;
 
 
 public:
@@ -36,6 +37,7 @@ public:
     bool endState();
     std::vector<std::vector<int>> getBoard();
     std::vector<std::pair<int,int>> getEmpties();
+    int getOp();
 };
 
 #endif /* STATE_H */
