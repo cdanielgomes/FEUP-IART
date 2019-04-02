@@ -34,6 +34,7 @@ public:
     int getPathCost();
     bool equal(Node * rhs);
     void setCost(int i);
+    std::string const toString();
     bool isVisited();
     void setVisited();
     std::vector<Node *> * getChilds();

@@ -23,7 +23,7 @@ namespace std {
     struct equal_to<Node *> {
         bool
         operator()(Node *obj, Node *obj2) const {
-            return obj->equal(*obj2);
+            return obj->equal(obj2);
         }
     };
 }

@@ -3,11 +3,12 @@
 using namespace std;
 
 Search::Search() {}
-
+/*
 bool tryEnd(Node * n){
-    n
-}
+    auto i = n->getState().getBlock(-1).getBros();
 
+}*/
+/*
 bool Search::expand(Node *node, Node *ancestor) {
     if (ancestor == nullptr) { // reached root
         return true;
@@ -18,7 +19,7 @@ bool Search::expand(Node *node, Node *ancestor) {
     }
 
     return expand(node, ancestor->getParent());
-}
+}*/
 
 bool Search::addToQueue(Node *node) {
     State visitedState = node->getState();

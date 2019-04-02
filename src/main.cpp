@@ -1,9 +1,5 @@
-<<<<<<< HEAD
-//#include "search.h"
-=======
 
 #include "search.h"
->>>>>>> 2d35b5b6e993c3e7e072fe710783180d50d39e8a
 #include "DFS.h"
 #include "astar.h"
 #include <chrono>
@@ -46,7 +42,7 @@ int main() {
     // astar a(initialState);
     // a.solve();
 
-    dfs.solve();
+    //dfs.solve();
 
     //astar a(root);
     //a.solve();
