@@ -64,6 +64,9 @@ public class Malanca implements Game<State, Board, Integer> {
 
     @Override
     public double getUtility(State state, Integer player) {
+
+
+
         return 0;
     }
 

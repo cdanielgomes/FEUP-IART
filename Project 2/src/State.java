@@ -32,8 +32,14 @@ public class State implements Cloneable {
 
     public ArrayList<Board> getActions() {
         ArrayList<Board> boardsPlayed = new ArrayList<>();
-        ArrayList<Integer> playes =  board.plays(playerHasMove);
+        ArrayList<Integer> plays =  board.plays(playerHasMove);
 
+
+        for(Integer play : plays){
+
+            this.board.emptyHole(playerHasMove, play);
+
+        }
 
         return boardsPlayed;
     }
@@ -60,5 +66,15 @@ public class State implements Cloneable {
 
     public void setBoard(Board board) {
         this.board = board;
+    }
+
+    public boolean extraTurn(Integer player){
+
+
+
+    }
+
+    public boolean won(Integer player){
+        return this.board.whoWon() + 1 == player;
     }
 }
