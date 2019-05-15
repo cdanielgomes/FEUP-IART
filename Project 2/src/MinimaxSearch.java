@@ -6,14 +6,14 @@
  */
 public class MinimaxSearch  {
 
-    private Malanca game;
+    private Mancala game;
 
 
-    public static  MinimaxSearch createFor(Malanca game) {
+    public static  MinimaxSearch createFor(Mancala game) {
         return new MinimaxSearch(game);
     }
 
-    public MinimaxSearch(Malanca game) {
+    public MinimaxSearch(Mancala game) {
         this.game = game;
     }
 
