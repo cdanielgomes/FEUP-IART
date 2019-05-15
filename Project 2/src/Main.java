@@ -37,7 +37,7 @@ public class Main {
     private static void runAlgorithm(Node root, int alg) {
     }
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws CloneNotSupportedException {
 /*        System.out.println("\n\nHello! Welcome to the N-Puzzle Solver.\n\nWe're reading your puzzle under res/puzzle.txt...");
         ArrayList<ArrayList<Integer>> board = readPuzzle();
         if(board == null) {
@@ -45,8 +45,7 @@ public class Main {
         }
         System.out.println("Done!\n");*/
 
-        Board board = new Board();
-        board.draw();
+
 
 /*        Scanner scan = new Scanner(System.in);
         System.out.println("What algorithm would you like me to run?");

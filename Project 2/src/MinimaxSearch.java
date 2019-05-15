@@ -4,24 +4,24 @@
  * @param <P> Type which is used for players in the game.
  * @author Ruediger Lunde
  */
-public class MinimaxSearch<S, A, P>  {
+public class MinimaxSearch  {
 
-    //private Game<S, A, P> game;
+    private Malanca game;
 
-    /*
-    public static <S, A, P> MinimaxSearch<S, A, P> createFor(Game<S, A, P> game) {
-        return new MinimaxSearch<>(game);
+
+    public static  MinimaxSearch createFor(Malanca game) {
+        return new MinimaxSearch(game);
     }
 
-    public MinimaxSearch(Game<S, A, P> game) {
+    public MinimaxSearch(Malanca game) {
         this.game = game;
     }
 
-    public A makeDecision(S state) {
-        A result = null;
+    public Board makeDecision(State state) {
+        Board result = null;
         double resultValue = Double.NEGATIVE_INFINITY;
-        P player = game.getPlayer(state);
-        for (A action : game.getActions(state)) {
+        int player = game.getPlayer(state);
+        for (Board action : game.getActions(state)) {
             double value = minValue(game.getResult(state, action), player);
             if (value > resultValue) {
                 result = action;
@@ -31,26 +31,28 @@ public class MinimaxSearch<S, A, P>  {
         return result;
     }
 
-    public double maxValue(S state, P player) { // returns an utility
+    public double maxValue(State state, int player) { // returns an utility
         if (game.isTerminal(state))
             return game.getUtility(state, player);
         double value = Double.NEGATIVE_INFINITY;
-        for (A action : game.getActions(state))
+        for (Board action : game.getActions(state))
             value = Math.max(value,
                     minValue(game.getResult(state, action), player));
         return value;
     }
 
-    public double minValue(S state, P player) { // returns an utility
+    public double minValue(State state, int player) { // returns an utility
         if (game.isTerminal(state))
             return game.getUtility(state, player);
         double value = Double.POSITIVE_INFINITY;
-        for (A action : game.getActions(state))
+        for (Board action : game.getActions(state))
             value = Math.min(value,
                     maxValue(game.getResult(state, action), player));
         return value;
     }
 
-     */
+
+
+
 
 }

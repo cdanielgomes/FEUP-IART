@@ -1,6 +1,7 @@
 import java.util.ArrayList;
+import java.util.Collections;
 
-class Board {
+class Board implements Cloneable {
     private static final int ROWS = 2;
     private static final int COLUMNS = 7;
     private static final int INITIAL_BEANS = 4;
@@ -23,6 +24,26 @@ class Board {
             }
         }
     }
+
+
+    @Override
+
+    public Object clone() throws
+            CloneNotSupportedException
+    {
+        Board a = (Board) super.clone();
+
+        a.board = new int[ROWS][COLUMNS];
+
+        for (int i = 0; i < ROWS; i++){
+            for (int j = 0; j < COLUMNS; j++){
+                a.board[i][j] = this.board[i][j];
+            }
+        }
+
+        return a;
+    }
+
 
     private boolean removeBean(int row, int column) {
         // if there are beans in the hole
@@ -72,6 +93,61 @@ class Board {
         return true;
     }
 
+    public ArrayList<Integer> plays(int player){
+
+        ArrayList<Integer> boards = new ArrayList<>();
+        int row = (player == 1) ? 0 : 1;
+
+        for(int i = row; i < COLUMNS; i++){
+            if(board[row][i] != 0) boards.add(i);
+        }
+
+        return boards;
+    }
+
+
+    public int gameOver(){
+
+        for (int i = 0; i < ROWS; i++){
+            int j = (i == 0) ? 1 : 0 ;
+            for(; j < COLUMNS; j++){
+                if(board[i][j] != 0) break;
+            }
+
+            if(j == 6) return i;
+        }
+
+        return -1;
+    }
+
+
+    public int whoWon(){
+        int plays = gameOver(), p1Pieces, p2Pieces;
+
+        if (plays == -1){
+            return -1;
+        } else if (plays == 1){
+           p1Pieces = countPieces(0) + board[0][0];
+           p2Pieces = board[1][COLUMNS - 1];
+        } else {
+            p1Pieces = board[0][0];
+            p2Pieces = countPieces(1) + board[1][COLUMNS - 1];
+        }
+
+        return p1Pieces < p2Pieces ? 1 : 0;
+    }
+
+
+    public int countPieces(int player){
+        int sum = 0;
+        int a = player == 0 ? 1 : 0;
+
+        for(; a < COLUMNS; a++){
+            sum += board[player][player];
+        }
+        return sum;
+    }
+
     int getPot1() {
         return board[0][0];
     }
@@ -79,6 +155,7 @@ class Board {
     int getPot2() {
         return board[ROWS-1][COLUMNS-1];
     }
+
 
     void draw() {
         System.out.print(" | " + getPot1() + " | ");
@@ -106,4 +183,14 @@ class Board {
         System.out.println();
     }
 
+    public void setPiece(int row, int col, int nPieces){
+
+        board[row][col] = nPieces;
+    }
+
+    public int[][] getBoard() {
+        return board;
+    }
 }
+
+
