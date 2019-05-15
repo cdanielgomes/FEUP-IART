@@ -1,6 +1,6 @@
 import java.util.List;
 
-public class Malanca implements Game<State, Board, Integer> {
+public class Mancala implements Game<State, Board, Integer> {
 
     private State initialState;
     private State currentState;
@@ -8,7 +8,7 @@ public class Malanca implements Game<State, Board, Integer> {
 
     int currentPlaying;
 
-    Malanca(State state){
+    Mancala(State state){
 
         this.initialState = state;
         this.currentState = state;

@@ -59,6 +59,30 @@ class Board implements Cloneable {
         board[row][column]++;
     }
 
+    private void verifyLanding(int player, int finishedRow, int finishedColumn) {
+        switch(player) {
+            case 1:
+                if(finishedRow == 0) {
+                    if(finishedColumn == 0) {
+                        System.out.println("Free turn!");
+                    }
+                    else if(board[finishedRow][finishedColumn] == 1) {
+                        System.out.println("Capture!");
+                    }
+                }
+                break;
+            case 2:
+                if(finishedRow == 1) {
+                    if(finishedColumn == COLUMNS - 1) {
+                        System.out.println("Free turn!");
+                    }
+                    else if(board[finishedRow][finishedColumn] == 1) {
+                        System.out.println("Capture!");
+                    }
+                }
+        }
+    }
+
     // player = 1 OR player = 2
     boolean emptyHole(int player, int holeNumber) {
         int row = player-1, column = ((player == 1) ? holeNumber : holeNumber - 1);
@@ -76,8 +100,8 @@ class Board implements Cloneable {
                 if(removeBean(row, column)) {
                     numberOfBeans--;
                     addBean(i,j);
-                    j=((i==0) ? j - 1 : j + 1);
                     finishedRow=i; finishedColumn=j;
+                    j=((i==0) ? j - 1 : j + 1);
                 }
             }
             else {
@@ -89,6 +113,8 @@ class Board implements Cloneable {
                 }
             }
         }
+
+        verifyLanding(player, finishedRow, finishedColumn);
 
         return true;
     }
