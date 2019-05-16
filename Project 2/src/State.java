@@ -7,15 +7,14 @@ public class State implements Cloneable {
     Integer playerHasMove;
     double value = 0;
 
+
     State(Board board, int playerHasMove){
 
         this.board = board;
         this.playerHasMove = playerHasMove;
     }
 
-    public void changePlayer(){
-        this.playerHasMove = this.playerHasMove == 1 ? 2 : 1;
-    }
+    public void changePlayer(){this.playerHasMove = this.playerHasMove == 1 ? 2 : 1; }
 
     public void setX(int x) {
         this.value = x;
@@ -37,11 +36,19 @@ public class State implements Cloneable {
 
         for(Integer play : plays){
 
-            this.board.emptyHole(playerHasMove, play);
+            this.value = checkPlay(playerHasMove);
+
+           int special =  this.board.emptyHole(playerHasMove, play);
 
         }
 
         return boardsPlayed;
+    }
+
+    private double checkPlay(Integer playerHasMove) {
+
+
+
     }
 
 
