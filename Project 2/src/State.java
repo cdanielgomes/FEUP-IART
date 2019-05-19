@@ -48,7 +48,7 @@ public class State implements Cloneable {
     private double checkPlay(Integer playerHasMove) {
 
 
-
+        return 0;
     }
 
 
@@ -78,7 +78,7 @@ public class State implements Cloneable {
     public boolean extraTurn(Integer player){
 
 
-
+        return true;
     }
 
     public boolean won(Integer player){
