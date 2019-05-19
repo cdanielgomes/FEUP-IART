@@ -5,6 +5,8 @@ class Board implements Cloneable {
     private static final int ROWS = 2;
     private static final int COLUMNS = 7;
     private static final int INITIAL_BEANS = 4;
+    private static final int[][] initialBoard = {{0, 4, 4, 4, 4, 4, 4},
+                                                 {4, 4, 4, 4, 4, 4, 4}};
 
     private int[][] board;
 
@@ -12,6 +14,10 @@ class Board implements Cloneable {
         board = new int[ROWS][COLUMNS];
 
         initBoard();
+    }
+
+    Board(int[][] board) {
+        this.board = board;
     }
 
     private void initBoard() {
@@ -25,9 +31,11 @@ class Board implements Cloneable {
         }
     }
 
+    static int[][] getInitialBoard() {
+        return initialBoard;
+    }
 
     @Override
-
     public Object clone() throws
             CloneNotSupportedException {
         Board a = (Board) super.clone();
@@ -86,6 +94,7 @@ class Board implements Cloneable {
                         return 3;
                     } else if (board[finishedRow][finishedColumn] == 1) {
                         System.out.println("Capture!");
+                        // TODO capture function
                         return 4;
                     }
                 }
@@ -205,6 +214,7 @@ class Board implements Cloneable {
 
 
     void draw() {
+        System.out.println(" Pot 1                       Pot 2\n");
         System.out.print(" | " + getPot1() + " | ");
 
         for (int i = 0; i < ROWS; i++) {
@@ -219,10 +229,10 @@ class Board implements Cloneable {
             }
 
             if (i == 0) {
-                System.out.print(getPot2() + " |\n");
+                System.out.print("  |\n");
             }
             if (i == ROWS - 1) {
-                System.out.print("  |\n");
+                System.out.print(getPot2() + " |\n");
             }
 
         }

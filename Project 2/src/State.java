@@ -2,7 +2,6 @@ import java.util.ArrayList;
 
 public class State implements Cloneable {
 
-
     private Board board;
     Integer playerHasMove;
     double value = 0;
@@ -83,5 +82,9 @@ public class State implements Cloneable {
 
     public boolean won(Integer player){
         return this.board.whoWon() + 1 == player;
+    }
+
+    static Board getInitialBoard() {
+        return new Board(Board.getInitialBoard());
     }
 }
