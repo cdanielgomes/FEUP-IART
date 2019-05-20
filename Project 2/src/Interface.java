@@ -22,21 +22,23 @@ class testClass implements Interface {
         switch (choice) {
         case "1":
             System.out.println("\n");
-            Integer player1 = 1;
-            Integer player2 = 2;
+            Integer player1 = 0;
+            Integer player2 = 1;
             playGamePP(player1, player2);
             System.out.println("\n");
             break;
         case "2":
             System.out.println("\n");
-            //playGame();
+            Integer player5 = 0;
+            Integer player6 = 1;
+            playGamePC(player5, player6);
             System.out.println("\n");
 
             break;
         case "3":
             System.out.println("\n");
-            Integer player3 = 1;
-            Integer player4 = 2;
+            Integer player3 = 0;
+            Integer player4 = 1;
             playGameCC(player3, player4);
             System.out.println("\n");
             break;
@@ -60,7 +62,12 @@ class testClass implements Interface {
             b.emptyHole(player1, move);
             state.changePlayer();
 
-        } while (state.won(player1) == false && state.won(player2) == false);
+        }while (state.won(player1) == false && state.won(player2) == false);
+        if(b.whoWon() == 0){
+            System.out.println("Player 1 has won");
+        }else{
+            System.out.println("Player 2 has won");
+        }
     }
 
     public void playGameCC(Integer player1, Integer player2) {
@@ -69,15 +76,39 @@ class testClass implements Interface {
         Mancala game = new Mancala(state);
         MinimaxSearch ai = new MinimaxSearch(game);
         do {
-            b.draw();
-            //System.out.println("What's your move?");
-            //Scanner scan = new Scanner(System.in);
-            //int move = scan.nextInt();
-            ai.makeDecision(state);
-           // b.emptyHole(player1, state);
             state.changePlayer();
-
+            ai.makeDecision(state);
+            b.draw();
         } while (state.won(player1) == false && state.won(player2) == false);
+        if(b.whoWon() == 0){
+            System.out.println("Player 1 has won");
+        }else{
+            System.out.println("Player 2 has won");
+        }
+    }
+
+    public void playGamePC(Integer player1, Integer player2){
+        Board b = new Board();
+        State state = new State(b,player1);
+        State state2 = new State(b,player2);
+        Mancala game = new Mancala(state);
+        MinimaxSearch ai = new MinimaxSearch(game);
+
+        do{
+            b.draw();
+            System.out.println("What's your move?");
+            Scanner scan = new Scanner(System.in);
+            int move = scan.nextInt();
+            b.emptyHole(player1, move);
+            ai.makeDecision(state2);
+            state2.changePlayer();
+
+        }while (state2.won(player2) == false && state2.won(player2) == false);
+        if(b.whoWon() == 0){
+            System.out.println("Player 1 has won");
+        }else{
+            System.out.println("Player 2 has won");
+        }
     }
 
 }
