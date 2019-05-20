@@ -46,7 +46,8 @@ public class Mancala implements Game<State, Board, Integer> {
         try {
             nState = (State) state.clone();
             nState.setBoard(action);
-            nState.changePlayer();
+            if(!action.isTurn())
+                nState.changePlayer();
 
             return nState;
         } catch (CloneNotSupportedException e) {
@@ -62,12 +63,30 @@ public class Mancala implements Game<State, Board, Integer> {
         return state.end();
     }
 
+
+    /***
+     *
+     *  Permite ganhar vale 100 pontos
+     *  permite turno extra 5 pontos
+     *  comer peças 10
+     *  permite adicionar uma peça 2 pontos
+     *  diferença de peças entre openentes
+     *
+     * @param state
+     * @param player
+     * @return
+     */
     @Override
     public double getUtility(State state, Integer player) {
 
+        int adv = player == 1 ? 2 : 1;
+        int diffP = state.diffPieces(player, adv);
+        int eat = state.eatOpponent(player) ? 10 : 0;
+        int turn = state.extraTurn() ? 5 : 0;
+        int point = state.plus() ? 2 : 0;
+        int won(player) ? 100 : 0;
 
-
-        return 0;
+        return adv + diffP + eat + turn + point + won;
     }
 
 

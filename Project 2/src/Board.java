@@ -6,8 +6,8 @@ class Board implements Cloneable {
     private static final int COLUMNS = 7;
     private static final int INITIAL_BEANS = 4;
     private static final int[][] initialBoard = {{0, 4, 4, 4, 4, 4, 4},
-                                                 {4, 4, 4, 4, 4, 4, 4}};
-
+            {4, 4, 4, 4, 4, 4, 4}};
+    boolean turn = false, eat = false, point = false;
     private int[][] board;
 
     Board() {
@@ -79,9 +79,11 @@ class Board implements Cloneable {
             case 1:
                 if (finishedRow == 0) {
                     if (finishedColumn == 0) {
+                        turn = true;
                         System.out.println("Free turn!");
                         return 1;
                     } else if (board[finishedRow][finishedColumn] == 1) {
+                        eat = true;
                         System.out.println("Capture!");
                         return 2;
                     }
@@ -90,9 +92,11 @@ class Board implements Cloneable {
             case 2:
                 if (finishedRow == 1) {
                     if (finishedColumn == COLUMNS - 1) {
+                        turn = true;
                         System.out.println("Free turn!");
                         return 3;
                     } else if (board[finishedRow][finishedColumn] == 1) {
+                        eat = true;
                         System.out.println("Capture!");
                         // TODO capture function
                         return 4;
@@ -116,6 +120,12 @@ class Board implements Cloneable {
     int emptyHole(int player, int holeNumber) {
         int row = player - 1, column = ((player == 1) ? holeNumber : holeNumber - 1);
         int numberOfBeans = board[row][column];
+        int points = 0;
+
+        if (player == 1)
+            points = board[player - 1][0];
+        else
+            points = board[player - 1][COLUMNS - 1];
 
         if (numberOfBeans == 0) {
             System.out.println("You have to choose a non-empty hole!");
@@ -144,9 +154,26 @@ class Board implements Cloneable {
             }
         }
 
+        if (player == 1)
+            point = points < board[player - 1][0];
+        else
+            point = points < board[player - 1][COLUMNS - 1];
+
 
         return verifyLanding(player, finishedRow, finishedColumn);
-        
+
+    }
+
+    public boolean isEat() {
+        return eat;
+    }
+
+    public boolean isTurn() {
+        return turn;
+    }
+
+    public boolean isPoint() {
+        return point;
     }
 
     public ArrayList<Integer> plays(int player) {
@@ -199,8 +226,21 @@ class Board implements Cloneable {
         int a = player == 0 ? 1 : 0;
 
         for (; a < COLUMNS; a++) {
-            sum += board[player][player];
+            sum += board[player][a];
         }
+        return sum;
+    }
+
+    public int playedPieces(int player) {
+
+        int sum = 0;
+        int col = player == 1 ? COLUMNS : COLUMNS - 1;
+        int a = player == 1 ? 1 : 0;
+
+        for (; a < col; a++) {
+            sum += board[player - 1][a];
+        }
+
         return sum;
     }
 

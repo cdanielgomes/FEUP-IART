@@ -36,8 +36,9 @@ public class MinimaxSearch  {
             return game.getUtility(state, player);
         double value = Double.NEGATIVE_INFINITY;
         for (Board action : game.getActions(state))
-            value = Math.max(value,
-                    minValue(game.getResult(state, action), player));
+            value = action.isTurn() ? Math.max(value,
+                    minValue(game.getResult(state, action), player)) : Math.max(value,
+                    maxValue(game.getResult(state, action), player));
         return value;
     }
 
@@ -46,7 +47,8 @@ public class MinimaxSearch  {
             return game.getUtility(state, player);
         double value = Double.POSITIVE_INFINITY;
         for (Board action : game.getActions(state))
-            value = Math.min(value,
+            value = action.isTurn() ? Math.min(value,
+                    minValue(game.getResult(state, action), player)) : Math.min(value,
                     maxValue(game.getResult(state, action), player));
         return value;
     }

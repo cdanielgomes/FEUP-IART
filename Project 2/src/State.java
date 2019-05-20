@@ -32,22 +32,15 @@ public class State implements Cloneable {
         ArrayList<Board> boardsPlayed = new ArrayList<>();
         ArrayList<Integer> plays =  board.plays(playerHasMove);
 
-
         for(Integer play : plays){
 
-            this.value = checkPlay(playerHasMove);
-
+            Board newB = this.board.clone();
            int special =  this.board.emptyHole(playerHasMove, play);
+
 
         }
 
         return boardsPlayed;
-    }
-
-    private double checkPlay(Integer playerHasMove) {
-
-
-        return 0;
     }
 
 
@@ -75,10 +68,23 @@ public class State implements Cloneable {
     }
 
     public boolean extraTurn(Integer player){
-
-
-        return true;
+        return playerHasMove == player && this.board.isTurn();
     }
+
+    public boolean eatOpponent(Integer player){
+        return this.board.isEat() && playerHasMove != player ;
+    }
+
+    public int diffPieces(int p1, int p2){
+
+        return this.board.playedPieces(p1) - this.board.playedPieces(p2);
+    }
+
+    public boolean plus(Integer player){
+        return this.board.isPoint();
+    }
+
+
 
     public boolean won(Integer player){
         return this.board.whoWon() + 1 == player;
