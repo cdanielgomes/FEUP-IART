@@ -22,18 +22,22 @@ class testClass implements Interface {
         switch (choice) {
         case "1":
             System.out.println("\n");
-            playGame();
+            Integer player1 = 1;
+            Integer player2 = 2;
+            playGamePP(player1, player2);
             System.out.println("\n");
             break;
         case "2":
             System.out.println("\n");
-            playGame();
+            //playGame();
             System.out.println("\n");
 
             break;
         case "3":
             System.out.println("\n");
-            playGame();
+            Integer player3 = 1;
+            Integer player4 = 2;
+            playGameCC(player3, player4);
             System.out.println("\n");
             break;
         case "q":
@@ -44,22 +48,36 @@ class testClass implements Interface {
 
     }
 
-    public void playGame() {
+    public void playGamePP(Integer player1, Integer player2) {
         Board b = new Board();
-        int p = 0;
-        State state = new State(b, p);
+        State state = new State(b, player1);
         Mancala game = new Mancala(state);
-        int player = game.getPlayer(state);
         do {
             b.draw();
-            // player = m.getPlayers();
             System.out.println("What's your move?");
             Scanner scan = new Scanner(System.in);
             int move = scan.nextInt();
-            b.emptyHole(player, move);
+            b.emptyHole(player1, move);
             state.changePlayer();
 
-        } while (state.won(player) == false);
+        } while (state.won(player1) == false && state.won(player2) == false);
+    }
+
+    public void playGameCC(Integer player1, Integer player2) {
+        Board b = new Board();
+        State state = new State(b, player1);
+        Mancala game = new Mancala(state);
+        MinimaxSearch ai = new MinimaxSearch(game);
+        do {
+            b.draw();
+            //System.out.println("What's your move?");
+            //Scanner scan = new Scanner(System.in);
+            //int move = scan.nextInt();
+            ai.makeDecision(state);
+           // b.emptyHole(player1, state);
+            state.changePlayer();
+
+        } while (state.won(player1) == false && state.won(player2) == false);
     }
 
 }
