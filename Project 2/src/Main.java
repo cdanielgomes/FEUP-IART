@@ -1,9 +1,11 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.net.Inet4Address;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Main {
+
+public class Main{
 
     private static ArrayList<ArrayList<Integer>> readPuzzle() {
         Scanner input;
@@ -42,65 +44,17 @@ public class Main {
     }
 
     public static void main(String[] args) {
+        testClass t = new testClass(); 
+        t.display();
 
         System.out.println("\nDrawing initial board: \n");
         Board initialBoard = State.getInitialBoard();
         initialBoard.draw();
     }
 
-    interface Interface  {
-        void display();
-    }
   
-    class testClass implements Interface {
-
-        public void display()
-        {
-            System.out.println("\n\n");
-            System.out.println("\n\n");
-            System.out.println("\n\n");
-            System.out.println("MMMMMMMM               MMMMMMMM              AAA              NNNNNNNN        NNNNNNNN       CCCCCCCCCCCCC              AAA              LLLLLLLLLLL                           AAA            ");
-            System.out.println("M:::::::M             M:::::::M             A:::A             N:::::::N       N::::::N    CCC::::::::::::C             A:::A             L:::::::::L                          A:::A   ");
-            System.out.println("M::::::::M           M::::::::M            A:::::A            N::::::::N      N::::::N  CC:::::::::::::::C            A:::::A            L:::::::::L                         A:::::A             ");
-            System.out.println("M:::::::::M         M:::::::::M           A:::::::A           N:::::::::N     N::::::N C:::::CCCCCCCC::::C           A:::::::A           LL:::::::LL                        A:::::::A            ");
-            System.out.println("M::::::::::M       M::::::::::M          A:::::::::A          N::::::::::N    N::::::NC:::::C       CCCCCC          A:::::::::A            L:::::L                         A:::::::::A                   ");
-            System.out.println("M:::::::::::M     M:::::::::::M         A:::::A:::::A         N:::::::::::N   N::::::C:::::C                       A:::::A:::::A           L:::::L                        A:::::A:::::A                  ");
-            System.out.println("M:::::::M::::M   M::::M:::::::M        A:::::A A:::::A        N:::::::N::::N  N::::::C:::::C                      A:::::A A:::::A          L:::::L                       A:::::A A:::::A                 ");
-            System.out.println("M::::::M M::::M M::::M M::::::M       A:::::A   A:::::A       N::::::N N::::N N::::::C:::::C                     A:::::A   A:::::A         L:::::L                      A:::::A   A:::::A                ");
-            System.out.println("M::::::M  M::::M::::M  M::::::M      A:::::A     A:::::A      N::::::N  N::::N:::::::C:::::C                    A:::::A     A:::::A        L:::::L                     A:::::A     A:::::A               ");
-            System.out.println("M::::::M   M:::::::M   M::::::M     A:::::AAAAAAAAA:::::A     N::::::N   N:::::::::::C:::::C                   A:::::AAAAAAAAA:::::A       L:::::L                    A:::::AAAAAAAAA:::::A              ");
-            System.out.println("M::::::M    M:::::M    M::::::M    A:::::::::::::::::::::A    N::::::N    N::::::::::C:::::C                  A:::::::::::::::::::::A      L:::::L                   A:::::::::::::::::::::A             ");
-            System.out.println("M::::::M     MMMMM     M::::::M   A:::::AAAAAAAAAAAAA:::::A   N::::::N     N:::::::::NC:::::C       CCCCCC   A:::::AAAAAAAAAAAAA:::::A     L:::::L         LLLLLL   A:::::AAAAAAAAAAAAA:::::A            ");
-            System.out.println("M::::::M               M::::::M  A:::::A             A:::::A  N::::::N      N::::::::N C:::::CCCCCCCC::::C  A:::::A             A:::::A  LL:::::::LLLLLLLLL:::::L  A:::::A             A:::::A           ");
-            System.out.println("M::::::M               M::::::M A:::::A               A:::::A N::::::N       N:::::::N  CC:::::::::::::::C A:::::A               A:::::A L::::::::::::::::::::::L A:::::A               A:::::A          ");
-            System.out.println("M::::::M               M::::::MA:::::A                 A:::::AN::::::N        N::::::N    CCC::::::::::::CA:::::A                 A:::::AL::::::::::::::::::::::LA:::::A                 A:::::A         ");
-            System.out.println("MMMMMMMM               MMMMMMMAAAAAAA                   AAAAAANNNNNNNN         NNNNNNN       CCCCCCCCCCCCAAAAAAA                   AAAAAALLLLLLLLLLLLLLLLLLLLLLLAAAAAAA                   AAAAAAA        ");
-            System.out.println("\n\n");
-            System.out.println("\n\n");
-            System.out.println("\n\n");
-            System.out.println("\n\n");
-            System.out.println("\n\n");
-
-            ArrayList<ArrayList<Integer>> board = readPuzzle();
-
-            if(board != null) {
-                return;
-            }else{
-                //runAlgorithm(root, scan.nextInt());
-                System.out.println("Done!\n");
-                System.out.println("\n\n");
-            }
-
-        }
-
-    }
 
     public static void promptMenu() throws CloneNotSupportedException {
-
-        Main m;
-        m = new Main();
-        testClass t = m.new testClass();
-        t.display();
 
 /*        System.out.println("\n\nHello! Welcome to the N-Puzzle Solver.\n\nWe're reading your puzzle under res/puzzle.txt...");
         ArrayList<ArrayList<Integer>> board = readPuzzle();
