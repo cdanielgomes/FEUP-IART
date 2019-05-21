@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 
-public class Main{
+public class Main {
 
     private static ArrayList<ArrayList<Integer>> readPuzzle() {
         Scanner input;
@@ -13,22 +13,22 @@ public class Main{
             input = new Scanner(new File("../res/puzzle.txt"));
         } catch (FileNotFoundException e) {
             System.out.println("\n\nCan't find res/puzzle.txt. Please make sure your puzzles are there!");
-            System.out.println("\n\n"); 
-            System.out.println("\n\n"); 
+            System.out.println("\n\n");
+            System.out.println("\n\n");
             System.out.println("\n\n");
             return null;
         }
 
         ArrayList<ArrayList<Integer>> board = new ArrayList<>();
 
-        while(input.hasNextLine()) {
+        while (input.hasNextLine()) {
             String fileLine = input.nextLine();
-            if(fileLine.length() == 0) {
+            if (fileLine.length() == 0) {
                 continue;
             }
             Scanner lineReader = new Scanner(fileLine);
             ArrayList<Integer> line = new ArrayList<>();
-            while(lineReader.hasNextInt()) {
+            while (lineReader.hasNextInt()) {
                 line.add(lineReader.nextInt());
             }
             board.add(line);
@@ -44,15 +44,23 @@ public class Main{
     }
 
     public static void main(String[] args) {
-        testClass t = new testClass(); 
+        testClass t = new testClass();
         t.display();
 
-        System.out.println("\nDrawing initial board: \n");
-        Board initialBoard = State.getInitialBoard();
-        initialBoard.draw();
+
+/*        int[][] b = new int[][]{{4, 4, 4, 4, 4, 4, 0}, {0, 0, 0, 0, 0, 0, 10}};
+
+        Board board = new Board(b);
+
+        board.draw();
+
+
+        int i2 = board.whoWon();
+
+        System.out.println("O player " + i2 + " ganhou");
+*/
     }
 
-  
 
     public static void promptMenu() throws CloneNotSupportedException {
 

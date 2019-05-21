@@ -2,13 +2,14 @@ import java.util.List;
 
 public class Mancala implements Game<State, Board, Integer> {
 
+
     private State initialState;
     private State currentState;
-    Integer player1 = 1 , player2 = 2;
+    Integer player1 = 1, player2 = 2;
 
     int currentPlaying;
 
-    Mancala(State state){
+    Mancala(State state) {
 
         this.initialState = state;
         this.currentState = state;
@@ -23,9 +24,9 @@ public class Mancala implements Game<State, Board, Integer> {
 
     @Override
     public Integer[] getPlayers() {
-      Integer[] k = new Integer[2];
-      k[0] = player1;
-      k[1] = player2;
+        Integer[] k = new Integer[2];
+        k[0] = player1;
+        k[1] = player2;
         return k;
     }
 
@@ -46,7 +47,7 @@ public class Mancala implements Game<State, Board, Integer> {
         try {
             nState = (State) state.clone();
             nState.setBoard(action);
-            if(!action.isTurn())
+            if (!action.isTurn())
                 nState.changePlayer();
 
             return nState;
@@ -60,7 +61,8 @@ public class Mancala implements Game<State, Board, Integer> {
 
     @Override
     public boolean isTerminal(State state) {
-        return state.end();
+        boolean bol = state.end();
+        return bol;
     }
 
 
@@ -82,13 +84,13 @@ public class Mancala implements Game<State, Board, Integer> {
         int adv = player == 1 ? 2 : 1;
         int diffP = state.diffPieces(player, adv);
         int eat = state.eatOpponent(player) ? 10 : 0;
-        int turn = state.extraTurn() ? 5 : 0;
-        int point = state.plus() ? 2 : 0;
-        int won(player) ? 100 : 0;
+        int turn = state.extraTurn(player) ? 5 : 0;
+        int point = state.plus(player) ? 2 : 0;
+        int won = state.won(player) ? 100 : 0;
 
+        System.out.println(adv + diffP + eat + turn + point + won);
         return adv + diffP + eat + turn + point + won;
     }
-
 
 
 }

@@ -10,6 +10,8 @@ public interface Interface {
 
 class testClass implements Interface {
 
+    public static enum PLAYS { PLAYER, AI};
+
     public void display() {
         System.out.println("Menu: ");
         System.out.println("1 : Player vs Player");
@@ -19,36 +21,106 @@ class testClass implements Interface {
         Scanner scan = new Scanner(System.in);
         String choice = scan.nextLine();
 
-        switch (choice) {
-        case "1":
-            System.out.println("\n");
-            Integer player1 = 0;
-            Integer player2 = 1;
-            playGamePP(player1, player2);
-            System.out.println("\n");
-            break;
-        case "2":
-            System.out.println("\n");
-            Integer player5 = 0;
-            Integer player6 = 1;
-            playGamePC(player5, player6);
-            System.out.println("\n");
 
-            break;
-        case "3":
-            System.out.println("\n");
-            Integer player3 = 0;
-            Integer player4 = 1;
-            playGameCC(player3, player4);
-            System.out.println("\n");
-            break;
-        case "q":
-            System.out.println("Goodbye");
-            break;
+        switch (choice) {
+            case "1":
+                System.out.println("\n");
+                Integer player1 = 0;
+                Integer player2 = 1;
+                startGame(PLAYS.PLAYER, PLAYS.PLAYER);
+                // playGamePP(player1, player2);
+                System.out.println("\n");
+                break;
+            case "2":
+                System.out.println("\n");
+                Integer player5 = 0;
+                Integer player6 = 1;
+                startGame(PLAYS.AI, PLAYS.PLAYER);
+
+                //playGamePC(player5, player6);
+                System.out.println("\n");
+
+                break;
+            case "3":
+                System.out.println("\n");
+                Integer player3 = 0;
+                Integer player4 = 1;
+                startGame(PLAYS.AI, PLAYS.AI);
+                //playGameCC(player3, player4);
+                System.out.println("\n");
+                break;
+            case "q":
+                System.out.println("Goodbye");
+                break;
 
         }
 
     }
+
+
+    private void startGame(PLAYS player1, PLAYS player2) {
+        PLAYS[] players = new PLAYS[]{player1, player2};
+        int first = whoStarts();
+        Board board = new Board();
+
+        State state = new State(board, first);
+        Mancala game = new Mancala(state);
+        int move = 0;
+
+
+        MinimaxSearch min = new MinimaxSearch(game);
+
+        while (!game.isTerminal(state)) {
+
+            state.getBoard().draw();
+
+            switch (players[state.getPlayer() - 1]) {
+                case PLAYER:
+                    state.makePlayerMove(askMove(state.getPlayer()));
+                    break;
+                case AI:
+                    game = new Mancala(state);
+                    min = new MinimaxSearch(game);
+                    board = min.makeDecision(state);
+                    if(board == null) System.out.println("É AQUI!");
+                    state = new State(board, state.getPlayer());
+                    break;
+            }
+
+        }
+
+    }
+
+
+
+    public int askMove(int player){
+        Scanner scan = new Scanner(System.in);
+
+        System.out.println("Choose a play player " + player);
+        return scan.nextInt();
+    }
+
+    private int whoStarts() {
+        System.out.println("WHO STARTS PLAYING?");
+        System.out.println("Player 1 or Player 2");
+        int choose;
+        Scanner scan = new Scanner(System.in);
+
+        do {
+
+            choose = scan.nextInt();
+
+            if(choose == 1 || choose == 2)
+                break;
+
+        } while (true);
+
+        return choose;
+
+    }
+
+
+    /*
 
     public void playGamePP(Integer player1, Integer player2) {
         Board b = new Board();
@@ -78,12 +150,17 @@ class testClass implements Interface {
         do {
             state.changePlayer();
             ai.makeDecision(state);
+            System.out.println("dicision made");
             b.draw();
-        } while (state.won(player1) == false && state.won(player2) == false);
+        } while (!game.end());
+
         if(b.whoWon() == 0){
             System.out.println("Player 1 has won");
-        }else{
+        }else if(b.whoWon() == 1){
             System.out.println("Player 2 has won");
+        }else{
+            System.out.println("DEU MERDA");
+
         }
     }
 
@@ -109,6 +186,6 @@ class testClass implements Interface {
         }else{
             System.out.println("Player 2 has won");
         }
-    }
+    }*/
 
 }

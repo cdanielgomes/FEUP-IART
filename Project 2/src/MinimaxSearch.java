@@ -8,7 +8,7 @@ public class MinimaxSearch  {
 
     private Mancala game;
 
-
+int turn = 0;
     public static  MinimaxSearch createFor(Mancala game) {
         return new MinimaxSearch(game);
     }
@@ -21,13 +21,18 @@ public class MinimaxSearch  {
         Board result = null;
         double resultValue = Double.NEGATIVE_INFINITY;
         int player = game.getPlayer(state);
+
         for (Board action : game.getActions(state)) {
+
             double value = minValue(game.getResult(state, action), player);
+            System.out.println("value =" + value);
             if (value > resultValue) {
                 result = action;
                 resultValue = value;
             }
         }
+
+        if(result == null) System.out.println("ta fdd");
         return result;
     }
 
@@ -35,10 +40,11 @@ public class MinimaxSearch  {
         if (game.isTerminal(state))
             return game.getUtility(state, player);
         double value = Double.NEGATIVE_INFINITY;
+
         for (Board action : game.getActions(state))
             value = action.isTurn() ? Math.max(value,
-                    minValue(game.getResult(state, action), player)) : Math.max(value,
-                    maxValue(game.getResult(state, action), player));
+                    maxValue(game.getResult(state, action), player)) : Math.max(value,
+                    minValue(game.getResult(state, action), player));
         return value;
     }
 
@@ -46,6 +52,7 @@ public class MinimaxSearch  {
         if (game.isTerminal(state))
             return game.getUtility(state, player);
         double value = Double.POSITIVE_INFINITY;
+
         for (Board action : game.getActions(state))
             value = action.isTurn() ? Math.min(value,
                     minValue(game.getResult(state, action), player)) : Math.min(value,

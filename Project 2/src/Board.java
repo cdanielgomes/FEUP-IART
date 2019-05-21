@@ -48,6 +48,10 @@ class Board implements Cloneable {
             }
         }
 
+        a.point = false;
+        a.eat = false;
+        a.turn = false;
+
         return a;
     }
 
@@ -80,11 +84,11 @@ class Board implements Cloneable {
                 if (finishedRow == 0) {
                     if (finishedColumn == 0) {
                         turn = true;
-                        System.out.println("Free turn!");
+                        //    System.out.println("Free turn!");
                         return 1;
                     } else if (board[finishedRow][finishedColumn] == 1) {
                         eat = true;
-                        System.out.println("Capture!");
+                        //  System.out.println("Capture!");
                         return 2;
                     }
                 }
@@ -93,11 +97,11 @@ class Board implements Cloneable {
                 if (finishedRow == 1) {
                     if (finishedColumn == COLUMNS - 1) {
                         turn = true;
-                        System.out.println("Free turn!");
+                        //System.out.println("Free turn!");
                         return 3;
                     } else if (board[finishedRow][finishedColumn] == 1) {
                         eat = true;
-                        System.out.println("Capture!");
+                        //System.out.println("Capture!");
                         // TODO capture function
                         return 4;
                     }
@@ -179,10 +183,11 @@ class Board implements Cloneable {
     public ArrayList<Integer> plays(int player) {
 
         ArrayList<Integer> boards = new ArrayList<>();
-        int row = (player == 1) ? 0 : 1;
-
-        for (int i = row; i < COLUMNS; i++) {
-            if (board[row][i] != 0) boards.add(i);
+        int def = (player == 1) ? 0 : 1;
+        int row = (player == 1) ? 1 : 0;
+        int maxCol = (player == 1) ? COLUMNS : COLUMNS - 1;
+        for (int i = row; i < maxCol; i++) {
+            if (board[player - 1][i] != 0) boards.add(i + def);
         }
 
         return boards;
@@ -193,11 +198,13 @@ class Board implements Cloneable {
 
         for (int i = 0; i < ROWS; i++) {
             int j = (i == 0) ? 1 : 0;
-            for (; j < COLUMNS; j++) {
+            int col = (i == 0) ? COLUMNS : COLUMNS - 1;
+            for (; j < col; j++) {
                 if (board[i][j] != 0) break;
             }
 
-            if (j == 6) return i;
+            if (j == col) return i + 1;
+
         }
 
         return -1;
@@ -209,24 +216,23 @@ class Board implements Cloneable {
 
         if (plays == -1) {
             return -1;
-        } else if (plays == 1) {
-            p1Pieces = countPieces(0) + board[0][0];
+        } else if (plays == 2) {
+            p1Pieces = countPieces(1);
             p2Pieces = board[1][COLUMNS - 1];
         } else {
             p1Pieces = board[0][0];
-            p2Pieces = countPieces(1) + board[1][COLUMNS - 1];
+            p2Pieces = countPieces(2);
         }
 
-        return p1Pieces < p2Pieces ? 1 : 0;
+        return p1Pieces < p2Pieces ? 2 : 1;
     }
 
 
     public int countPieces(int player) {
         int sum = 0;
-        int a = player == 0 ? 1 : 0;
 
-        for (; a < COLUMNS; a++) {
-            sum += board[player][a];
+        for (int a = 0; a < COLUMNS; a++) {
+            sum += board[player - 1][a];
         }
         return sum;
     }
