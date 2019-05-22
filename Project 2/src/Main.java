@@ -1,50 +1,6 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.net.Inet4Address;
-import java.util.ArrayList;
-import java.util.Scanner;
-
-
 public class Main {
-
-    private static ArrayList<ArrayList<Integer>> readPuzzle() {
-        Scanner input;
-        try {
-            input = new Scanner(new File("../res/puzzle.txt"));
-        } catch (FileNotFoundException e) {
-            System.out.println("\n\nCan't find res/puzzle.txt. Please make sure your puzzles are there!");
-            System.out.println("\n\n");
-            System.out.println("\n\n");
-            System.out.println("\n\n");
-            return null;
-        }
-
-        ArrayList<ArrayList<Integer>> board = new ArrayList<>();
-
-        while (input.hasNextLine()) {
-            String fileLine = input.nextLine();
-            if (fileLine.length() == 0) {
-                continue;
-            }
-            Scanner lineReader = new Scanner(fileLine);
-            ArrayList<Integer> line = new ArrayList<>();
-            while (lineReader.hasNextInt()) {
-                line.add(lineReader.nextInt());
-            }
-            board.add(line);
-            lineReader.close();
-        }
-
-        input.close();
-        return board;
-    }
-
-
-    private static void runAlgorithm(Node root, int alg) {
-    }
-
     public static void main(String[] args) {
-        testClass t = new testClass();
+        Interface t = new Interface();
         t.display();
 /*
        int[][] b = new int[][]{{0, 4, 4, 4, 4, 4, 4}, {4, 4, 4, 4, 4, 4, 0}};
@@ -79,5 +35,4 @@ public class Main {
 
         runAlgorithm(root, scan.nextInt());*/
     }
-
 }

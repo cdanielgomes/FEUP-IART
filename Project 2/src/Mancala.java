@@ -1,8 +1,6 @@
 import java.util.List;
 
 public class Mancala implements Game<State, Board, Integer> {
-
-
     private State initialState;
     private State currentState;
     Integer player1 = 1, player2 = 2;
@@ -10,7 +8,6 @@ public class Mancala implements Game<State, Board, Integer> {
     int currentPlaying;
 
     Mancala(State state) {
-
         this.initialState = state;
         this.currentState = state;
         this.currentPlaying = state.getPlayer();

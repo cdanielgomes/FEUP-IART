@@ -5,7 +5,6 @@ class Board implements Cloneable {
     private static final int ROWS = 2;
     private static final int COLUMNS = 7;
     private static final int INITIAL_BEANS = 4;
-    private static final int[][] initialBoard = { { 0, 4, 4, 4, 4, 4, 4 }, { 4, 4, 4, 4, 4, 4, 4 } };
     boolean turn = false, eat = false, point = false;
     private int[][] board;
     private Integer play = null;
@@ -29,10 +28,6 @@ class Board implements Cloneable {
                 board[i][j] = INITIAL_BEANS;
             }
         }
-    }
-
-    static int[][] getInitialBoard() {
-        return initialBoard;
     }
 
     @Override
@@ -77,35 +72,53 @@ class Board implements Cloneable {
 
     private void verifyLanding(int player, int finishedRow, int finishedColumn) {
         switch (player) {
-        case 1:
-            if (finishedRow == 0) {
-                if (finishedColumn == 0) {
-                    turn = true;
-                    // System.out.println("Free turn!");
-                    return;
-                } else if (board[finishedRow][finishedColumn] == 1) {
-                    eat = true;
-                    // System.out.println("Capture!");
-                    return;
+            case 1:
+                if (finishedRow == 0) {
+                    if (finishedColumn == 0) { // free turn
+                        turn = true;
+                        return;
+                    } else if (board[finishedRow][finishedColumn] == 1) { // capture oponent's beans
+                        eat = true;
+                        captureHole(player, 1, finishedColumn - 1);
+                        return;
+                    }
                 }
-            }
-            break;
-        case 2:
-            if (finishedRow == 1) {
-                if (finishedColumn == COLUMNS - 1) {
-                    turn = true;
-                    // System.out.println("Free turn!");
-                    return;
-                } else if (board[finishedRow][finishedColumn] == 1) {
-                    eat = true;
-                    // System.out.println("Capture!");
-                    // TODO capture function
-                    return;
+                break;
+            case 2:
+                if (finishedRow == 1) {
+                    if (finishedColumn == COLUMNS - 1) { // free turn
+                        turn = true;
+                        return
+                    } else if (board[finishedRow][finishedColumn] == 1) { // capture oponent's beans
+                        eat = true;
+                        captureHole(player, 0, finishedColumn + 1);
+                        return;
+                    }
                 }
             }
         }
 
         return;
+    }
+
+    private void captureHole(int player, int row, int column) {
+        int nbeans = board[row][column];
+        if(nbeans == 0) {
+            return;
+        }
+        board[row][column] = 0;
+
+        addToPot(player, nbeans);
+    }
+
+    private void addToPot(int player, int nbeans) {
+        switch (player)  {
+            case 1:
+                board[0][0] = board[0][0] + nbeans;
+                break;
+            case 2:
+                board[ROWS-1][COLUMNS-1] = board[ROWS-1][COLUMNS-1] + nbeans;
+        }
     }
 
     // player = 1 OR player = 2
@@ -282,11 +295,6 @@ class Board implements Cloneable {
         }
 
         System.out.println();
-    }
-
-    public void setPiece(int row, int col, int nPieces) {
-
-        board[row][col] = nPieces;
     }
 
     public int[][] getBoard() {
