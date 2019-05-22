@@ -69,7 +69,7 @@ class testClass implements Interface {
 
 
         MinimaxSearch min = new MinimaxSearch(game);
-
+        AlphaBetaSearch ab = new AlphaBetaSearch(game);
         while (!game.isTerminal(state)) {
 
             state.getBoard().draw();
@@ -80,12 +80,20 @@ class testClass implements Interface {
                     break;
                 case AI:
                     game = new Mancala(state);
-                    min = new MinimaxSearch(game);
-                    board = min.makeDecision(state);
+                    ab = new AlphaBetaSearch(game);
+                    board = ab.makeDecision(state);
                     if(board == null) System.out.println("É AQUI!");
                     state = new State(board, state.getPlayer());
                     break;
             }
+
+            System.out.println("chegamos a solução");
+           
+           try{ 
+            Thread.sleep(3000);
+           }catch(Exception e){
+               e.printStackTrace();
+           }
 
         }
 
