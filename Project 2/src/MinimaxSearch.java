@@ -51,6 +51,7 @@ int turn = 0;
     public double minValue(State state, int player) { // returns an utility
         if (game.isTerminal(state))
             return game.getUtility(state, player);
+            
         double value = Double.POSITIVE_INFINITY;
 
         for (Board action : game.getActions(state))

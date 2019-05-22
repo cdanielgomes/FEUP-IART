@@ -54,7 +54,7 @@ public class State implements Cloneable {
 
                 Board newB = (Board) this.board.clone();
                 newB.emptyHole(playerHasMove, play);
-                newB.draw();
+             //   newB.draw();
                 boardsPlayed.add(newB);
             }
 
@@ -95,9 +95,11 @@ public class State implements Cloneable {
         return this.board.isEat() && playerHasMove != player;
     }
 
-    public int diffPieces(int p1, int p2) {
+    public int diffPieces(int p1) {
 
-        return this.board.playedPieces(p1) - this.board.playedPieces(p2);
+        int adv = p1 == 1 ? 2 : 1;
+
+        return this.board.playedPieces(p1) - this.board.playedPieces(adv);
     }
 
     public boolean plus(Integer player) {
@@ -106,7 +108,7 @@ public class State implements Cloneable {
 
 
     public boolean won(Integer player) {
-        return this.board.whoWon() + 1 == player;
+        return this.board.whoWon() == player;
     }
 
 

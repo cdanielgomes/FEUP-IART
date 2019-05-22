@@ -61,7 +61,10 @@ class Interface {
 
 
         MinimaxSearch min = new MinimaxSearch(game);
-        AlphaBetaSearch ab = new AlphaBetaSearch(game);
+       // ABSearch ab = new ABSearch(game);
+
+       AlphaBetaSearch ab = new AlphaBetaSearch(game);
+
         while (!game.isTerminal(state)) {
 
             state.getBoard().draw();
@@ -73,12 +76,17 @@ class Interface {
                 case AI:
                     game = new Mancala(state);
                     ab = new AlphaBetaSearch(game);
-                    board = ab.makeDecision(state);
+                    board = ab.makeDecision(state,5);
                     if(board == null) System.out.println("É AQUI!");
+                    System.out.println("Player " + state.getPlayer() + " played in hole number = " + board.getPlay());
+                    if(!board.isTurn()) state.changePlayer();
                     state = new State(board, state.getPlayer());
-                    break;
+                   break;
             }
         }
+
+
+        System.out.println("Player " + state.getBoard().whoWon() + " won! ");
 
     }
 
@@ -93,7 +101,7 @@ class Interface {
 
     private int whoStarts() {
         System.out.println("WHO STARTS PLAYING?");
-        System.out.println("Player 1 or Player 2");
+        System.out.print("Player 1 or Player 2: ");
         int choose;
         Scanner scan = new Scanner(System.in);
 

@@ -72,52 +72,52 @@ class Board implements Cloneable {
 
     private void verifyLanding(int player, int finishedRow, int finishedColumn) {
         switch (player) {
-            case 1:
-                if (finishedRow == 0) {
-                    if (finishedColumn == 0) { // free turn
-                        turn = true;
-                        return;
-                    } else if (board[finishedRow][finishedColumn] == 1) { // capture oponent's beans
-                        eat = true;
-                        captureHole(player, 1, finishedColumn - 1);
-                        return;
-                    }
+        case 1:
+            if (finishedRow == 0) {
+                if (finishedColumn == 0) { // free turn
+                    turn = true;
+                    return;
+                } else if (board[finishedRow][finishedColumn] == 1) { // capture oponent's beans
+                    eat = true;
+                    captureHole(player, 1, finishedColumn - 1);
+                    return;
                 }
-                break;
-            case 2:
-                if (finishedRow == 1) {
-                    if (finishedColumn == COLUMNS - 1) { // free turn
-                        turn = true;
-                        return
-                    } else if (board[finishedRow][finishedColumn] == 1) { // capture oponent's beans
-                        eat = true;
-                        captureHole(player, 0, finishedColumn + 1);
-                        return;
-                    }
+            }
+            break;
+        case 2:
+            if (finishedRow == 1) {
+                if (finishedColumn == COLUMNS - 1) { // free turn
+                    turn = true;
+                    return;
+                } else if (board[finishedRow][finishedColumn] == 1) { // capture oponent's beans
+                    eat = true;
+                    captureHole(player, 0, finishedColumn + 1);
+                    return;
                 }
             }
         }
-
         return;
+
     }
 
     private void captureHole(int player, int row, int column) {
         int nbeans = board[row][column];
-        if(nbeans == 0) {
+        if (nbeans == 0) {
             return;
         }
         board[row][column] = 0;
-
+        nbeans += board[player - 1][player == 2 ? column - 1 : column + 1];
+        board[player - 1][player == 2 ? column - 1 : column + 1] = 0;
         addToPot(player, nbeans);
     }
 
     private void addToPot(int player, int nbeans) {
-        switch (player)  {
-            case 1:
-                board[0][0] = board[0][0] + nbeans;
-                break;
-            case 2:
-                board[ROWS-1][COLUMNS-1] = board[ROWS-1][COLUMNS-1] + nbeans;
+        switch (player) {
+        case 1:
+            board[0][0] = board[0][0] + nbeans;
+            break;
+        case 2:
+            board[ROWS - 1][COLUMNS - 1] = board[ROWS - 1][COLUMNS - 1] + nbeans;
         }
     }
 
@@ -237,7 +237,7 @@ class Board implements Cloneable {
             p2Pieces = countPieces(2);
         }
 
-        return p1Pieces < p2Pieces ? 2 : 1;
+        return p1Pieces == p2Pieces ? 3 : p1Pieces < p2Pieces ? 2 : 1;
     }
 
     public int countPieces(int player) {
@@ -299,5 +299,12 @@ class Board implements Cloneable {
 
     public int[][] getBoard() {
         return board;
+    }
+
+    /**
+     * @return the play
+     */
+    public Integer getPlay() {
+        return play;
     }
 }
