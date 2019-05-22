@@ -3,5 +3,4 @@ public class Main {
         Interface t = new Interface();
         t.display();
     }
-
 }

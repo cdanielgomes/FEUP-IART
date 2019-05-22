@@ -41,16 +41,6 @@ public class State implements Cloneable {
         ArrayList<Integer> plays = board.plays(playerHasMove);
 
 
-  /*      System.out.println("---------------------- BOARD PAI -----------------------");
-        board.draw();
-        System.out.println("---------------------- BOARD PAI -----------------------\n PLAYS:");
-
-
-        for (Integer play : plays) {
-            System.out.print(" " + play);
-        }
-        System.out.print("\n");
-*/
         try {
 
             for (Integer play : plays) {
@@ -116,10 +106,6 @@ public class State implements Cloneable {
 
     public boolean won(Integer player) {
         return this.board.whoWon() + 1 == player;
-    }
-
-    static Board getInitialBoard() {
-        return new Board(Board.getInitialBoard());
     }
 
 
