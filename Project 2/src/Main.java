@@ -46,19 +46,18 @@ public class Main {
     public static void main(String[] args) {
         testClass t = new testClass();
         t.display();
-
-
-/*        int[][] b = new int[][]{{4, 4, 4, 4, 4, 4, 0}, {0, 0, 0, 0, 0, 0, 10}};
-
-        Board board = new Board(b);
+/*
+       int[][] b = new int[][]{{0, 4, 4, 4, 4, 4, 4}, {4, 4, 4, 4, 4, 4, 0}};
+       Board board = new Board(b);
 
         board.draw();
+    
+        State s = new State(board, 1);
+        int i2 = board.gameOver();
+        
+        boolean k = s.end();
 
-
-        int i2 = board.whoWon();
-
-        System.out.println("O player " + i2 + " ganhou");
-*/
+        System.out.println("O player " + k + " ficou sem peças");*/
     }
 
 

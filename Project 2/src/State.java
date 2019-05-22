@@ -23,9 +23,16 @@ public class State implements Cloneable {
         this.value = x;
     }
 
-    public void makePlayerMove(int move) {
-        this.board.emptyHole(playerHasMove, move);
-        changePlayer();
+    public boolean makePlayerMove(int move) {
+        if(!this.board.emptyHole(playerHasMove, move)) return false;
+        if(!this.board.isTurn()) changePlayer();
+        try{
+            this.board = (Board) this.board.clone();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return true;
     }
 
     public Integer getPlayer() {
@@ -56,15 +63,9 @@ public class State implements Cloneable {
             for (Integer play : plays) {
 
                 Board newB = (Board) this.board.clone();
-                int special = newB.emptyHole(playerHasMove, play);
+                newB.emptyHole(playerHasMove, play);
                 newB.draw();
                 boardsPlayed.add(newB);
-/*
-                try {
-                    Thread.sleep(3000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
             }
 
         } catch (CloneNotSupportedException e) {

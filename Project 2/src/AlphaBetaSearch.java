@@ -1,6 +1,7 @@
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Page 173.<br>
  * <p>
+ * 
  * <pre>
  * <code>
  * function ALPHA-BETA-SEARCH(state) returns an action
@@ -52,14 +53,16 @@ public class AlphaBetaSearch {
     }
 
     public Board makeDecision(State state) {
-    
+
         Board result = null;
         double resultValue = Double.NEGATIVE_INFINITY;
         Integer player = game.getPlayer(state);
         for (Board action : game.getActions(state)) {
-            double value = action.isTurn() ? minValue(game.getResult(state, action), player,
-                    Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY) : maxValue(game.getResult(state, action), player,
-                    Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+            double value = action.isTurn()
+                    ? minValue(game.getResult(state, action), player, Double.NEGATIVE_INFINITY,
+                            Double.POSITIVE_INFINITY)
+                    : maxValue(game.getResult(state, action), player, Double.NEGATIVE_INFINITY,
+                            Double.POSITIVE_INFINITY);
             if (value > resultValue) {
                 result = action;
                 resultValue = value;
@@ -69,21 +72,17 @@ public class AlphaBetaSearch {
     }
 
     public double maxValue(State state, Integer player, double alpha, double beta) {
- 
-        if (game.isTerminal(state)){
 
-           try{ 
-            Thread.sleep(3000);
-           }catch(Exception e){
-               e.printStackTrace();
-           }
-           return game.getUtility(state, player);
+        if (game.isTerminal(state)) {
+            pause();
+            return game.getUtility(state, player);
         }
         double value = Double.NEGATIVE_INFINITY;
         for (Board action : game.getActions(state)) {
             value = action.isTurn() ? Math.min(value, maxValue( //
-            game.getResult(state, action), player, alpha, beta)) : Math.max(value, minValue( //
-                    game.getResult(state, action), player, alpha, beta));
+                    game.getResult(state, action), player, alpha, beta))
+                    : Math.max(value, minValue( //
+                            game.getResult(state, action), player, alpha, beta));
             if (value >= beta)
                 return value;
             alpha = Math.max(alpha, value);
@@ -92,15 +91,16 @@ public class AlphaBetaSearch {
     }
 
     public double minValue(State state, Integer player, double alpha, double beta) {
-        if (game.isTerminal(state)){
+        if (game.isTerminal(state)) {
             pause();
-               return game.getUtility(state, player);
+            return game.getUtility(state, player);
         }
         double value = Double.POSITIVE_INFINITY;
         for (Board action : game.getActions(state)) {
             value = action.isTurn() ? Math.max(value, minValue( //
-            game.getResult(state, action), player, alpha, beta)) : Math.min(value, maxValue( //
-                    game.getResult(state, action), player, alpha, beta));
+                    game.getResult(state, action), player, alpha, beta))
+                    : Math.min(value, maxValue( //
+                            game.getResult(state, action), player, alpha, beta));
             if (value <= alpha)
                 return value;
             beta = Math.min(beta, value);
@@ -108,13 +108,12 @@ public class AlphaBetaSearch {
         return value;
     }
 
-    
-    public void pause(){
-        try{ 
+    public void pause() {
+        try {
             Thread.sleep(3000);
-           }catch(Exception e){
-               e.printStackTrace();
-           }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

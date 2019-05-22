@@ -104,7 +104,7 @@ class testClass implements Interface {
     public int askMove(int player){
         Scanner scan = new Scanner(System.in);
 
-        System.out.println("Choose a play player " + player);
+        System.out.print("Choose a play player " + player + ": ");
         return scan.nextInt();
     }
 
