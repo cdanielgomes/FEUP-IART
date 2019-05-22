@@ -1,14 +1,6 @@
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.util.ArrayList;
 import java.util.Scanner;
-import java.util.Stack;
 
-public interface Interface {
-    void display();
-}
-
-class testClass implements Interface {
+class Interface {
 
     public static enum PLAYS { PLAYER, AI};
 
