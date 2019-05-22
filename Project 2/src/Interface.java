@@ -86,15 +86,6 @@ class testClass implements Interface {
                     state = new State(board, state.getPlayer());
                     break;
             }
-
-            System.out.println("chegamos a solução");
-           
-           try{ 
-            Thread.sleep(3000);
-           }catch(Exception e){
-               e.printStackTrace();
-           }
-
         }
 
     }
