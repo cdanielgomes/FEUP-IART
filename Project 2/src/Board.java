@@ -158,6 +158,11 @@ class Board implements Cloneable {
                     finishedRow = i;
                     finishedColumn = j;
                     j = ((i == 0) ? j - 1 : j + 1);
+                    if (player == 2 && i == 0 && j == 0)
+                        j--;
+                    if (player == 1 && i == 1 && j == COLUMNS - 1)
+                        j++;
+
                 }
             } else {
                 if (i == 0) {
@@ -271,6 +276,7 @@ class Board implements Cloneable {
     }
 
     void draw() {
+
         System.out.println(" Pot 1                       Pot 2\n");
         System.out.print(" | " + getPot1() + " | ");
 
@@ -294,7 +300,7 @@ class Board implements Cloneable {
 
         }
 
-        System.out.println();
+        System.out.println("\n\n\n\n\n");
     }
 
     public int[][] getBoard() {
