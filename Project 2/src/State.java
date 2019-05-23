@@ -4,39 +4,40 @@ public class State implements Cloneable {
 
     private Board board;
     private Integer playerHasMove;
-    double value = 0;
+    private double value = 0;
 
+    State(int playerHasMove) {
+        this.playerHasMove = playerHasMove;
+        board = new Board();
+    }
 
     State(Board board, int playerHasMove) {
-
-
         this.board = board;
-
         this.playerHasMove = playerHasMove;
     }
 
-    public void changePlayer() {
+    void changePlayer() {
         this.playerHasMove = this.playerHasMove == 1 ? 2 : 1;
     }
 
-    public void setX(int x) {
+    void setX(int x) {
         this.value = x;
     }
 
-    public void makePlayerMove(int move) {
+    void makePlayerMove(int move) {
         this.board.emptyHole(playerHasMove, move);
         changePlayer();
     }
 
-    public Integer getPlayer() {
+    Integer getPlayer() {
         return this.playerHasMove;
     }
 
-    public Board getBoard() {
+    Board getBoard() {
         return board;
     }
 
-    public ArrayList<Board> getActions() {
+    ArrayList<Board> getActions() {
         ArrayList<Board> boardsPlayed = new ArrayList<>();
         ArrayList<Integer> plays = board.plays(playerHasMove);
 
@@ -64,12 +65,11 @@ public class State implements Cloneable {
     }
 
 
-    public boolean end() {
+    boolean end() {
         return this.board.gameOver() != -1;
     }
 
     @Override
-
     public Object clone() throws
             CloneNotSupportedException {
         State a = (State) super.clone();
@@ -82,29 +82,29 @@ public class State implements Cloneable {
     }
 
 
-    public void setBoard(Board board) {
+    void setBoard(Board board) {
         this.board = board;
     }
 
-    public boolean extraTurn(Integer player) {
-        return playerHasMove == player && this.board.isTurn();
+    boolean extraTurn(Integer player) {
+        return playerHasMove.equals(player) && this.board.isTurn();
     }
 
-    public boolean eatOpponent(Integer player) {
-        return this.board.isEat() && playerHasMove != player;
+    boolean eatOpponent(Integer player) {
+        return this.board.isEat() && playerHasMove.equals(player);
     }
 
-    public int diffPieces(int p1, int p2) {
+    int diffPieces(int p1, int p2) {
 
         return this.board.playedPieces(p1) - this.board.playedPieces(p2);
     }
 
-    public boolean plus(Integer player) {
+    boolean plus(Integer player) {
         return this.board.isPoint();
     }
 
 
-    public boolean won(Integer player) {
+    boolean won(Integer player) {
         return this.board.whoWon() + 1 == player;
     }
 

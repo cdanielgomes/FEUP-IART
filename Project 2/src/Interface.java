@@ -2,7 +2,7 @@ import java.util.Scanner;
 
 class Interface {
 
-    public static enum PLAYS { PLAYER, AI};
+    public static enum PLAYS {PLAYER, AI};
 
     public void display() {
         System.out.println("Menu: ");
@@ -48,7 +48,6 @@ class Interface {
         }
 
     }
-
 
     private void startGame(PLAYS player1, PLAYS player2) {
         PLAYS[] players = new PLAYS[]{player1, player2};
