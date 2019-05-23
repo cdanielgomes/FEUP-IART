@@ -7,6 +7,7 @@ class Board implements Cloneable {
     private static final int INITIAL_BEANS = 4;
     boolean turn = false, eat = false, point = false;
     private int[][] board;
+    private Integer play = null;
 
     Board() {
         board = new int[ROWS][COLUMNS];
@@ -30,8 +31,7 @@ class Board implements Cloneable {
     }
 
     @Override
-    public Object clone() throws
-            CloneNotSupportedException {
+    public Object clone() throws CloneNotSupportedException {
         Board a = (Board) super.clone();
 
         a.board = new int[ROWS][COLUMNS];
@@ -49,7 +49,6 @@ class Board implements Cloneable {
         return a;
     }
 
-
     private boolean removeBean(int row, int column) {
         // if there are beans in the hole
         if (board[row][column] > 0) {
@@ -64,7 +63,6 @@ class Board implements Cloneable {
         board[row][column]++;
     }
 
-
     /**
      * @param player current player
      * @param finishedRow row where the play finished
@@ -72,67 +70,68 @@ class Board implements Cloneable {
      * @return return codes
      */
 
-    private int verifyLanding(int player, int finishedRow, int finishedColumn) {
+    private void verifyLanding(int player, int finishedRow, int finishedColumn) {
         switch (player) {
-            case 1:
-                if (finishedRow == 0) {
-                    if (finishedColumn == 0) { // free turn
-                        turn = true;
-                        return 1;
-                    } else if (board[finishedRow][finishedColumn] == 1) { // capture oponent's beans
-                        eat = true;
-                        captureHole(player, 1, finishedColumn - 1);
-                        return 2;
-                    }
+        case 1:
+            if (finishedRow == 0) {
+                if (finishedColumn == 0) { // free turn
+                    turn = true;
+                    return;
+                } else if (board[finishedRow][finishedColumn] == 1) { // capture oponent's beans
+                    eat = true;
+                    captureHole(player, 1, finishedColumn - 1);
+                    return;
                 }
-                break;
-            case 2:
-                if (finishedRow == 1) {
-                    if (finishedColumn == COLUMNS - 1) { // free turn
-                        turn = true;
-                        return 3;
-                    } else if (board[finishedRow][finishedColumn] == 1) { // capture oponent's beans
-                        eat = true;
-                        captureHole(player, 0, finishedColumn + 1);
-                        return 4;
-                    }
+            }
+            break;
+        case 2:
+            if (finishedRow == 1) {
+                if (finishedColumn == COLUMNS - 1) { // free turn
+                    turn = true;
+                    return;
+                } else if (board[finishedRow][finishedColumn] == 1) { // capture oponent's beans
+                    eat = true;
+                    captureHole(player, 0, finishedColumn + 1);
+                    return;
                 }
+            }
         }
+        return;
 
-        return -1;
     }
 
     private void captureHole(int player, int row, int column) {
         int nbeans = board[row][column];
-        if(nbeans == 0) {
+        if (nbeans == 0) {
             return;
         }
         board[row][column] = 0;
-
+        nbeans += board[player - 1][player == 2 ? column - 1 : column + 1];
+        board[player - 1][player == 2 ? column - 1 : column + 1] = 0;
         addToPot(player, nbeans);
     }
 
     private void addToPot(int player, int nbeans) {
-        switch (player)  {
-            case 1:
-                board[0][0] = board[0][0] + nbeans;
-                break;
-            case 2:
-                board[ROWS-1][COLUMNS-1] = board[ROWS-1][COLUMNS-1] + nbeans;
+        switch (player) {
+        case 1:
+            board[0][0] = board[0][0] + nbeans;
+            break;
+        case 2:
+            board[ROWS - 1][COLUMNS - 1] = board[ROWS - 1][COLUMNS - 1] + nbeans;
         }
     }
 
     // player = 1 OR player = 2
 
     /***
-     *  Make the move and return special code if
-     *  the move capture pieces or extra turns
+     * Make the move and return special code if the move capture pieces or extra
+     * turns
      *
      * @param player current player
      * @param holeNumber hole chosen
      * @return return codes
      */
-    int emptyHole(int player, int holeNumber) {
+    boolean emptyHole(int player, int holeNumber) {
         int row = player - 1, column = ((player == 1) ? holeNumber : holeNumber - 1);
         int numberOfBeans = board[row][column];
         int points;
@@ -144,8 +143,10 @@ class Board implements Cloneable {
 
         if (numberOfBeans == 0) {
             System.out.println("You have to choose a non-empty hole!");
-            return -1;
+            return false;
         }
+
+        this.play = holeNumber;
 
         Integer finishedRow = null, finishedColumn = null;
         int i = row, j = ((row == 0) ? column - 1 : column + 1);
@@ -157,6 +158,11 @@ class Board implements Cloneable {
                     finishedRow = i;
                     finishedColumn = j;
                     j = ((i == 0) ? j - 1 : j + 1);
+                    if (player == 2 && i == 0 && j == 0)
+                        j--;
+                    if (player == 1 && i == 1 && j == COLUMNS - 1)
+                        j++;
+
                 }
             } else {
                 if (i == 0) {
@@ -174,9 +180,9 @@ class Board implements Cloneable {
         else
             point = points < board[player - 1][COLUMNS - 1];
 
+        verifyLanding(player, finishedRow, finishedColumn);
 
-        return verifyLanding(player, finishedRow, finishedColumn);
-
+        return true;
     }
 
     boolean isEat() {
@@ -198,7 +204,8 @@ class Board implements Cloneable {
         int row = (player == 1) ? 1 : 0;
         int maxCol = (player == 1) ? COLUMNS : COLUMNS - 1;
         for (int i = row; i < maxCol; i++) {
-            if (board[player - 1][i] != 0) boards.add(i + def);
+            if (board[player - 1][i] != 0)
+                boards.add(i + def);
         }
 
         return boards;
@@ -210,10 +217,12 @@ class Board implements Cloneable {
             int j = (i == 0) ? 1 : 0;
             int col = (i == 0) ? COLUMNS : COLUMNS - 1;
             for (; j < col; j++) {
-                if (board[i][j] != 0) break;
+                if (board[i][j] != 0)
+                    break;
             }
 
-            if (j == col) return i + 1;
+            if (j == col)
+                return i + 1;
 
         }
 
@@ -233,7 +242,7 @@ class Board implements Cloneable {
             p2Pieces = countPieces(2);
         }
 
-        return p1Pieces < p2Pieces ? 2 : 1;
+        return p1Pieces == p2Pieces ? 3 : p1Pieces < p2Pieces ? 2 : 1;
     }
 
     private int countPieces(int player) {
@@ -267,6 +276,7 @@ class Board implements Cloneable {
     }
 
     void draw() {
+
         System.out.println(" Pot 1                       Pot 2\n");
         System.out.print(" | " + getPot1() + " | ");
 
@@ -290,12 +300,17 @@ class Board implements Cloneable {
 
         }
 
-        System.out.println();
+        System.out.println("\n\n\n\n\n");
     }
 
     public int[][] getBoard() {
         return board;
     }
+
+    /**
+     * @return the play
+     */
+    public Integer getPlay() {
+        return play;
+    }
 }
-
-

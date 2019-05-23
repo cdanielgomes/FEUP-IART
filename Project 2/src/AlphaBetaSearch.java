@@ -1,6 +1,7 @@
 /**
  * Artificial Intelligence A Modern Approach (3rd Ed.): Page 173.<br>
  * <p>
+ * 
  * <pre>
  * <code>
  * function ALPHA-BETA-SEARCH(state) returns an action
@@ -51,70 +52,81 @@ public class AlphaBetaSearch {
         this.game = game;
     }
 
-    public Board makeDecision(State state) {
-    
+    public Board makeDecision(State state, int depth) {
+
         Board result = null;
         double resultValue = Double.NEGATIVE_INFINITY;
         Integer player = game.getPlayer(state);
         for (Board action : game.getActions(state)) {
-            double value = action.isTurn() ? minValue(game.getResult(state, action), player,
-                    Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY) : maxValue(game.getResult(state, action), player,
-                    Double.NEGATIVE_INFINITY, Double.POSITIVE_INFINITY);
+            double value = action.isTurn()
+                    ? maxValue(game.getResult(state, action), player, Double.NEGATIVE_INFINITY,
+                            Double.POSITIVE_INFINITY, depth)
+                    : minValue(game.getResult(state, action), player, Double.NEGATIVE_INFINITY,
+                            Double.POSITIVE_INFINITY, depth);
             if (value > resultValue) {
                 result = action;
                 resultValue = value;
             }
+       // pause();
         }
         return result;
     }
 
-    public double maxValue(State state, Integer player, double alpha, double beta) {
- 
-        if (game.isTerminal(state)){
+    public double maxValue(State state, Integer player, double alpha, double beta, int depth) {
 
-           try{ 
-            Thread.sleep(3000);
-           }catch(Exception e){
-               e.printStackTrace();
-           }
-           return game.getUtility(state, player);
+        if (game.isTerminal(state) || depth == 0) {
+            // pause();
+            double x = game.getUtility(state, player);
+         //   System.out.println("UTILITY = " + x);
+            return x;
         }
         double value = Double.NEGATIVE_INFINITY;
         for (Board action : game.getActions(state)) {
-            value = action.isTurn() ? Math.min(value, maxValue( //
-            game.getResult(state, action), player, alpha, beta)) : Math.max(value, minValue( //
-                    game.getResult(state, action), player, alpha, beta));
+            value = action.isTurn() ? Math.min(value, maxValue(game.getResult(state, action), player, alpha, beta, depth - 1))
+                    : Math.max(value, minValue(game.getResult(state, action), player, alpha, beta, depth -1));
+
+           // System.out.println("VALUE on maxValue = " + value);
+
             if (value >= beta)
                 return value;
             alpha = Math.max(alpha, value);
         }
+
+        //System.out.println("RETURNED VALUE ON maxValue = " + value + "\n\n\n");
+       // pause();
         return value;
     }
 
-    public double minValue(State state, Integer player, double alpha, double beta) {
-        if (game.isTerminal(state)){
-            pause();
-               return game.getUtility(state, player);
+    public double minValue(State state, Integer player, double alpha, double beta, int depth) {
+        if (game.isTerminal(state) || depth == 0) {
+            // pause();
+            double x = game.getUtility(state, player);
+          //  System.out.println("UTILITY = " + x);
+            return x;
         }
         double value = Double.POSITIVE_INFINITY;
         for (Board action : game.getActions(state)) {
-            value = action.isTurn() ? Math.max(value, minValue( //
-            game.getResult(state, action), player, alpha, beta)) : Math.min(value, maxValue( //
-                    game.getResult(state, action), player, alpha, beta));
+            value = action.isTurn() ? Math.max(value, minValue(game.getResult(state, action), player, alpha, beta, depth-1))
+                    : Math.min(value, maxValue(game.getResult(state, action), player, alpha, beta, depth-1));
+
+//            System.out.println("VALUE on minValue = " + value);
+
             if (value <= alpha)
                 return value;
             beta = Math.min(beta, value);
         }
+
+  //      System.out.println("RETURNED VALUE ON minValue = " + value + "\n\n\n");
+       // pause();
         return value;
     }
 
-    
-    public void pause(){
-        try{ 
+    public void pause() {
+        try {
             Thread.sleep(3000);
-           }catch(Exception e){
-               e.printStackTrace();
-           }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 

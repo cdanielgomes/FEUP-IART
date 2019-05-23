@@ -24,9 +24,16 @@ public class State implements Cloneable {
         this.value = x;
     }
 
-    void makePlayerMove(int move) {
-        this.board.emptyHole(playerHasMove, move);
-        changePlayer();
+    public boolean makePlayerMove(int move) {
+        if(!this.board.emptyHole(playerHasMove, move)) return false;
+        if(!this.board.isTurn()) changePlayer();
+        try{
+            this.board = (Board) this.board.clone();
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+
+        return true;
     }
 
     Integer getPlayer() {
@@ -47,15 +54,9 @@ public class State implements Cloneable {
             for (Integer play : plays) {
 
                 Board newB = (Board) this.board.clone();
-                int special = newB.emptyHole(playerHasMove, play);
-                newB.draw();
+                newB.emptyHole(playerHasMove, play);
+             //   newB.draw();
                 boardsPlayed.add(newB);
-/*
-                try {
-                    Thread.sleep(3000);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }*/
             }
 
         } catch (CloneNotSupportedException e) {
@@ -94,9 +95,11 @@ public class State implements Cloneable {
         return this.board.isEat() && playerHasMove.equals(player);
     }
 
-    int diffPieces(int p1, int p2) {
+    public int diffPieces(int p1) {
 
-        return this.board.playedPieces(p1) - this.board.playedPieces(p2);
+        int adv = p1 == 1 ? 2 : 1;
+
+        return this.board.playedPieces(p1) - this.board.playedPieces(adv);
     }
 
     boolean plus(Integer player) {
@@ -104,8 +107,8 @@ public class State implements Cloneable {
     }
 
 
-    boolean won(Integer player) {
-        return this.board.whoWon() + 1 == player;
+    public boolean won(Integer player) {
+        return this.board.whoWon() == player;
     }
 
 

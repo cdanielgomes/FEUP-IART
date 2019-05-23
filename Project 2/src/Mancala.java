@@ -13,7 +13,6 @@ public class Mancala implements Game<State, Board, Integer> {
         this.currentPlaying = state.getPlayer();
     }
 
-
     @Override
     public State getInitialState() {
         return initialState;
@@ -44,9 +43,11 @@ public class Mancala implements Game<State, Board, Integer> {
         try {
             nState = (State) state.clone();
             nState.setBoard(action);
+
             if (!action.isTurn())
                 nState.changePlayer();
 
+             //   nState.setX()
             return nState;
         } catch (CloneNotSupportedException e) {
             e.printStackTrace();
@@ -62,32 +63,44 @@ public class Mancala implements Game<State, Board, Integer> {
         return bol;
     }
 
-
     /***
      *
-     *  Permite ganhar vale 100 pontos
-     *  permite turno extra 5 pontos
-     *  comer peças 10
-     *  permite adicionar uma peça 2 pontos
-     *  diferença de peças entre openentes
+     * Permite ganhar vale 100 pontos permite turno extra 5 pontos comer peças 10
+     * permite adicionar uma peça 2 pontos diferença de peças entre openentes
      *
      * @param state
      * @param player
-     * @return
+     * @returnadv
      */
     @Override
     public double getUtility(State state, Integer player) {
 
-        int adv = player == 1 ? 2 : 1;
-        int diffP = state.diffPieces(player, adv);
+        int winner = state.getBoard().whoWon();
+        int draw;
+        
+        if (player == winner)
+            draw = 1;
+        else if (winner == 3)
+            draw =  0;
+        else
+            draw =  -1;
+
+        int diffP = state.diffPieces(player);
         int eat = state.eatOpponent(player) ? 10 : 0;
         int turn = state.extraTurn(player) ? 5 : 0;
         int point = state.plus(player) ? 2 : 0;
         int won = state.won(player) ? 100 : 0;
+        int v = state.getPlayer() == player ? 1 : -1;
+        double points = draw * (diffP + eat + turn + point + won);
 
-        System.out.println(adv + diffP + eat + turn + point + won);
-        return adv + diffP + eat + turn + point + won;
+       // System.out.println("value of Utility for player " + player + ": " + points + "\n" + "Player of the state: "
+         //       + state.getPlayer());
+         //state.getBoard().draw();
+        return points;
     }
 
+//    public double Evaluation(int player){
+
+  //  }
 
 }
