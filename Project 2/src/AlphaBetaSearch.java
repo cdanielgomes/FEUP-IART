@@ -69,6 +69,13 @@ public class AlphaBetaSearch {
             }
        // pause();
         }
+
+
+        if(result == null){
+
+            System.out.println( "Tamanho do Array = " + game.getActions(state).size());
+            state.getBoard().draw();
+        } 
         return result;
     }
 

@@ -88,19 +88,10 @@ public class Mancala implements Game<State, Board, Integer> {
         int diffP = state.diffPieces(player);
         int eat = state.eatOpponent(player) ? 10 : 0;
         int turn = state.extraTurn(player) ? 5 : 0;
-        int point = state.plus(player) ? 2 : 0;
         int won = state.won(player) ? 100 : 0;
-        int v = state.getPlayer() == player ? 1 : -1;
-        double points = draw * (diffP + eat + turn + point + won);
 
-       // System.out.println("value of Utility for player " + player + ": " + points + "\n" + "Player of the state: "
-         //       + state.getPlayer());
-         //state.getBoard().draw();
+        double points = (diffP + eat + turn + won);
         return points;
     }
-
-//    public double Evaluation(int player){
-
-  //  }
 
 }
