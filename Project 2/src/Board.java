@@ -64,10 +64,10 @@ class Board implements Cloneable {
     }
 
     /**
-     * @param player
-     * @param finishedRow
-     * @param finishedColumn
-     * @return
+     * @param player current player
+     * @param finishedRow row where the play finished
+     * @param finishedColumn column where the play finished
+     * @return return codes
      */
 
     private void verifyLanding(int player, int finishedRow, int finishedColumn) {
@@ -127,14 +127,14 @@ class Board implements Cloneable {
      * Make the move and return special code if the move capture pieces or extra
      * turns
      *
-     * @param player
-     * @param holeNumber
-     * @return
+     * @param player current player
+     * @param holeNumber hole chosen
+     * @return return codes
      */
     boolean emptyHole(int player, int holeNumber) {
         int row = player - 1, column = ((player == 1) ? holeNumber : holeNumber - 1);
         int numberOfBeans = board[row][column];
-        int points = 0;
+        int points;
 
         if (player == 1)
             points = board[player - 1][0];
@@ -185,19 +185,19 @@ class Board implements Cloneable {
         return true;
     }
 
-    public boolean isEat() {
+    boolean isEat() {
         return eat;
     }
 
-    public boolean isTurn() {
+    boolean isTurn() {
         return turn;
     }
 
-    public boolean isPoint() {
+    boolean isPoint() {
         return point;
     }
 
-    public ArrayList<Integer> plays(int player) {
+    ArrayList<Integer> plays(int player) {
 
         ArrayList<Integer> boards = new ArrayList<>();
         int def = (player == 1) ? 0 : 1;
@@ -211,7 +211,7 @@ class Board implements Cloneable {
         return boards;
     }
 
-    public int gameOver() {
+    int gameOver() {
 
         for (int i = 0; i < ROWS; i++) {
             int j = (i == 0) ? 1 : 0;
@@ -229,7 +229,7 @@ class Board implements Cloneable {
         return -1;
     }
 
-    public int whoWon() {
+    int whoWon() {
         int plays = gameOver(), p1Pieces, p2Pieces;
 
         if (plays == -1) {
@@ -245,7 +245,7 @@ class Board implements Cloneable {
         return p1Pieces == p2Pieces ? 3 : p1Pieces < p2Pieces ? 2 : 1;
     }
 
-    public int countPieces(int player) {
+    private int countPieces(int player) {
         int sum = 0;
 
         for (int a = 0; a < COLUMNS; a++) {
@@ -254,7 +254,7 @@ class Board implements Cloneable {
         return sum;
     }
 
-    public int playedPieces(int player) {
+    int playedPieces(int player) {
 
         int sum = 0;
         int col = player == 1 ? COLUMNS : COLUMNS - 1;
@@ -267,11 +267,11 @@ class Board implements Cloneable {
         return sum;
     }
 
-    int getPot1() {
+    private int getPot1() {
         return board[0][0];
     }
 
-    int getPot2() {
+    private int getPot2() {
         return board[ROWS - 1][COLUMNS - 1];
     }
 
